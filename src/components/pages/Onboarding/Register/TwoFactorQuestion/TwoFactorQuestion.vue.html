@@ -1,0 +1,14 @@
+<v-container fluid class="registerphone-container">
+	<v-layout column class="main-layout">
+		<v-flex xs12 sm8 offset-sm2 lg6 offset-lg3 class="mt-5 text-xs-center">
+            <p class="fs-36 fw-light m-t-48">Two-Factor Authenticator App</p>
+            <p class="f-16 mt-4">Lastly, we recommend using an authenticator app on your iOS or Android phone as a secure alternative to text message that is reliable in the event of limited cellular connection. 
+                Would you like to set this up now?</p>
+            
+            <v-flex class="m-t-60">
+                <v-btn round color="primary" large dark class="mr-5 yes-button" v-on:click="onNo">No</v-btn>		
+                <v-btn round color="primary" large dark class="yes-button" v-on:click="onYes">Yes</v-btn>		
+            </v-flex>
+		</v-flex>
+	</v-layout>
+</v-container>

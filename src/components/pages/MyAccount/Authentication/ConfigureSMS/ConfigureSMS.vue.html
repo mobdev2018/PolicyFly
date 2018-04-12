@@ -1,0 +1,21 @@
+<v-container class="configuresms-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 class="main-block text-xs-center">
+			<p class="fs-36 fw-light m-t-60">Two-Factor Text Messaging</p>				
+            <p class="fs-16 m-t-24 py-2 p-x-150">Please enter a phone number where you can receive text messages.</p>
+            
+            <v-flex class="item-view m-t-36">
+                <v-icon small color="black" class="ml-3">chat</v-icon>
+                <p class="ml-2 my-2 py-2">+1</p>
+                <div class="line-view ml-3 m-y-12"></div>                
+                <input type="text" v-model="phoneNumber" v-on:keyup="keyUp($event)" v-mask="'(###) ###-####'"/>                    
+            </v-flex>
+            <p class="fs-14 mt-2">Standard text messaging rates may apply.</p>
+
+            <div class="buttons-view">
+                <v-btn round color="primary" class="btn-large m-t-36" v-on:click="onNext" :disabled="!isValid">Next</v-btn>
+                <v-btn flat round color="primary" class="btn-large m-t-12" v-on:click="onCancel">Back</v-btn>
+            </div>
+		</v-flex>
+	</v-layout>	
+</v-container>

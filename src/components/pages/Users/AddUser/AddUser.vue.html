@@ -1,0 +1,57 @@
+<v-container fluid class="home-container" >
+	<v-layout column>
+		<v-flex class="main-layout mt-5 px-3 py-5" elevation-2 >
+			<v-form ref="inputForm" validate-on-blur>
+				<v-flex d-flex>
+					<v-flex xs6 class="pa-4">
+						<v-text-field validate-on-blur 
+							ref="fname" 
+							label="First Name" 
+							v-model="userInfo.fname"
+							:rules="[rules.required]" 
+							v-on:keyup="keyUp($event)"/>
+					</v-flex>
+					<v-flex xs6 class="pa-4">
+						<v-text-field validate-on-blur 
+							ref="lname"
+							label="Last Name"
+							v-model="userInfo.lname"
+							:rules="[rules.required]"
+							v-on:keyup="keyUp($event)"/>
+					</v-flex>
+				</v-flex>
+				<v-flex d-flex>
+					<v-flex xs6 class="pa-4">
+						<v-text-field
+							ref="email" 
+							label="Email"
+							v-model="userInfo.email"
+							:rules="[rules.required, rules.validEmail]"
+							v-on:keyup="keyUp($event)"/>
+					</v-flex>
+					<v-flex xs4 class="pa-4">
+						<v-select offset-y 
+							validate-on-blur 
+							v-bind:items="roles" 
+							ref="role"
+							label="Role"
+							v-model="userInfo.role"
+							v-on:input="keyUp($event)">
+						</v-select>
+					</v-flex>
+				</v-flex>
+			</v-form>
+		</v-flex>
+	</v-layout>
+	<div class="footerbar-view">
+		<v-layout row wrap>
+			<v-flex sm12>
+				<v-toolbar class="footer-content">
+					<v-btn flat color="grey" v-on:click="onCancel">Cancel</v-btn>
+					<v-spacer></v-spacer>
+					<v-btn color="primary" v-on:click="onSubmit" :disabled="!isActived">Submit</v-btn>
+				</v-toolbar>
+			</v-flex>
+		</v-layout>
+	</div>
+</v-container>

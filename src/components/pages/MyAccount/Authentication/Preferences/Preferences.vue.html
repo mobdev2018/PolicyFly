@@ -1,0 +1,35 @@
+<v-container class="authentication-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 class="authentication-block text-xs-center">
+			<p class="fs-36 m-t-60">Two-Factor Authentication Preferences</p>				
+            <p class="fs-18 m-t-48">You have configured, in green, the following two-factor authentication methods.</p>
+			<v-flex class="content-view mt-5">
+                <div class="left-view">
+                    <v-icon color="green" class="mx-3 green-circle">lens</v-icon>
+                    <p class="fs-16 content-text my-0 text-xs-left">Text messaging to +1 {{twoFactorSMSInfo.phone}}</p>
+                </div>
+                <v-btn flat right class="btn-flat right-button" v-on:click="modifySMS">Modify</v-btn>
+            </v-flex>
+            <v-flex class="content-view">
+                <div class="left-view">
+                    <v-icon v-if="isAuthenticatorApp" color="green" class="mx-3 green-circle">lens</v-icon>
+                    <v-icon v-else class="mx-3 fs-32">add</v-icon>
+                    <p class="fs-16 content-text my-0">Authenticator app</p>
+                </div>
+                <v-btn flat right class="btn-flat right-button mr-0" v-on:click="addAuthenticatorApp">Add</v-btn>
+                <v-btn v-if="isAuthenticatorApp" flat class="fs-14 mx-0" color="grey lighten-1" v-on:click="deleteAuthenticatorApp">Delete</v-btn>    
+            </v-flex>
+            <div class="m-t-120">
+                <v-alert
+                    color="grey darken-3"
+                    :value="alert"
+                    transition="slide-x-reverse-transition"
+                    class="alert-view">
+                    Your authentication has been modified.
+                    <v-btn flat color="white" @click="alert = false" class="m-l-48">close</v-btn>
+                </v-alert>
+            </div>
+            
+		</v-flex>
+	</v-layout>	
+</v-container>

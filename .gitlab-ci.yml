@@ -1,0 +1,46 @@
+stages:
+  - build
+  - push
+  - deploy
+
+build_docker:
+  stage: build
+  script:
+    - docker build -t gcr.io/policyfly/frontend:$CI_COMMIT_REF_NAME .
+
+push_image:
+  image: gcr.io/policyfly/gcloud:master
+  stage: push
+  only:
+    - develop
+    - stage
+    - master
+    - migration
+  script:
+    - gcloud docker -- push gcr.io/policyfly/frontend:$CI_COMMIT_REF_NAME
+
+deploy_image_int:
+  image: gcr.io/policyfly/gcloud:master
+  stage: deploy
+  only:
+    - develop
+  script:
+    - curl -i --fail -u $OPS_USERNAME:$OPS_PASSWORD -XPOST -d "" "https://skynet.policyfly.com/int"
+
+deploy_image_stage:
+  image: gcr.io/policyfly/gcloud:master
+  stage: deploy
+  only:
+    - stage
+  script:
+    - curl -i --fail -u $OPS_USERNAME:$OPS_PASSWORD -XPOST -d "" "https://skynet.policyfly.com/stage"
+
+deploy_image_prod:
+  image: gcr.io/policyfly/gcloud:master
+  stage: deploy
+  only:
+    - master
+  script:
+    - curl -i --fail -u $OPS_USERNAME:$OPS_PASSWORD -XPOST -d "" "https://skynet.policyfly.com/prod"
+
+

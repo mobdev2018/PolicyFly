@@ -1,0 +1,14 @@
+<div class="main-container">
+  <div class="navbar-view">
+    <Navbar role="Broker" />
+    <NavbarHeader isAutoTitle="true" :tabList="BrokerTabList" />
+    <NavbarBanner :date="date" :primaryName="primaryName" :coveragePeriod="coveragePeriod" :isActions="false"/>
+  </div>
+  <div class="page-container">
+    <transition name="fade" mode="out-in">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>
+</div>

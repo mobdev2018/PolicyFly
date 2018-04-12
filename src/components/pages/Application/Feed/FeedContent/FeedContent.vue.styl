@@ -1,0 +1,71 @@
+.feedcontent-container
+  display: inherit !important
+  max-width: none !important
+  .main-view
+    max-width: 900px
+    margin: 0 auto
+    .comment-input
+      width: 100%
+      outline: none
+    .date-view
+      display: flex
+      justify-content: space-between
+      width: 100%
+      align-items: center
+      .line-view
+        height: 1px
+        width: calc(50% - 110px)
+        background-color: #9b9b9b
+      .date-text
+        width: 196px
+        height: 24px
+        color: #9b9b9b
+        background-color: rgba(74, 144, 226, 0.16)
+        border-radius: 6px
+    .image-view
+      width: 44px
+      height 44px
+      border: 1px solid #9b9b9b
+      border-radius: 22px
+    .detail-view
+      max-width: calc(100% - 80px)
+      .link-text
+        text-decoration: underline;
+      .time-text
+        color: rgba(155, 155, 155, 0.53)
+      .message
+        padding-left: 10px
+        padding-right: 10px
+        padding-top: 8px
+        padding-bottom: 8px
+        margin-left: -10px
+        background: #C6DAF2
+        border-radius: 10px
+        position: relative
+        word-wrap: break-word
+      .message:before
+        content: "";
+        border: 25px solid transparent;
+        border-left-width: 6px;
+        border-right-width: 6px;
+        border-bottom-color: #c6daf2;
+        width: 0;
+        height: 0px;
+        transform: rotate(223deg);
+        position: absolute;
+        left: -13px;
+        bottom: -34px;
+  .alert-view
+    height: 56px
+    padding-right: 0px
+    background-color: #4D4F53 !important
+    border: none
+    position: fixed
+    right: calc(5% + 96px)
+    @media (max-width: 1100px)
+      right: 96px
+    @media (min-width: 1100px) and (max-width: 1300px)
+      right: calc(5% + 96px)
+    @media (min-width: 1300px)
+      right: calc(10% + 96px)
+    bottom: 15%

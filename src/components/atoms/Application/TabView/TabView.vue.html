@@ -1,0 +1,26 @@
+<v-tabs dark grow class="tab-view">
+  <v-tabs-bar color="white">
+    <v-tabs-item
+      v-for="(tab, index) in tabs"
+      :key="tab.link">
+      <div v-if="tab.valid" class="active-item">
+        <a href="javascript:void(0)" :class="{active: index == currentIndex, 'black-color': index < currentIndex}" @click="onTabSelected(index)">
+          <v-icon color="green" class="mr-1">check_circle</v-icon>
+          {{tab.name}}
+        </a>
+      </div>
+      <div v-else-if="!tab.valid && index<currentIndex" class="inactive-item">
+        <a href="javascript:void(0)" :class="{active: index == currentIndex, 'black-color': index < currentIndex}" @click="onTabSelected(index)">
+          <v-icon color="red" class="mr-1">close</v-icon>
+          {{tab.name}}
+        </a>
+      </div>
+      <div v-else class="normal-item">
+        <a href="javascript:void(0)" :class="{'active': index == currentIndex, 'black-color': index < currentIndex}" @click="onTabSelected(index)">
+          <v-icon v-if="!tab.valid && index==currentIndex" color="blue" class="mr-1 fs-12">fiber_manual_record</v-icon>
+          {{tab.name}}
+        </a>
+      </div>
+    </v-tabs-item>
+  </v-tabs-bar>
+</v-tabs>

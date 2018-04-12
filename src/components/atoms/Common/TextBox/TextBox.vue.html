@@ -1,0 +1,4 @@
+<div class="text-box-view py-2" :style="{backgroundColor: bgcolor}">
+    <v-icon v-if="icon" medium color="white" class="ml-3">{{icon}}</v-icon>
+    <input :type="type" v-model="text" class="mx-3 input-view" :maxlength="maxlength" v-on:keypress.enter.prevent="onSubmit()"/>                    
+</div>

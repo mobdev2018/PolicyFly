@@ -1,0 +1,188 @@
+<v-layout row class="question-view mt-4 pl-5">
+  <v-flex sm12>
+    <v-card flat class="p-x-12">
+      <v-card-title primary-title class="pb-0">
+        <div>
+          <h3 class="question-title mb-0" :class="{'blue--text': active}">{{order + 1}}. {{data.title}}</h3>
+          <div class="pt-3 grey--text">{{data.description}}</div>
+        </div>
+      </v-card-title>
+      <v-card-actions>
+        <AdditionalNamedInsured v-if="data.name=='Additional Named Insured'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <LimitsRequested v-else-if="data.name=='Limits Requested'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />          
+        <UnderlyingGeneralLiability v-else-if="data.name=='Underlying General Liability'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <OtherUnderlyingCoverages v-else-if="data.name=='Other Underlying Coverages'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <ExpiringUmbrella v-else-if="data.name=='Expiring Umbrella'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <TotalRatableExposures v-else-if="data.name=='Total Ratable Exposures'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <ScheduleOfLocations v-else-if="data.name=='Schedule of Locations'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <RetailOperations v-else-if="data.name=='Retail Operations'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <ApplicantOperations v-else-if="data.name=='Applicant Operations'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <SafetyInformation v-else-if="data.name=='Safety Information'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+        <AttachmentsView v-else-if="data.name=='Add Required Files'"
+          :order="order"
+          :parentOrder="parentOrder"
+          :questions="questions"
+          :active="active"
+          :on-active-card="onActiveCard"
+          :update-questions="updateQuestions" />
+
+        <v-form v-else ref="questionForm" v-model="data.valid" validate-on-blur class="inner-content"  @submit.prevent="">          
+          <div class="inline-field" :style="{width: item.width + '%'}" v-for="item in data.content">
+            <p v-if="item.description" class="ma-0 grey--text">{{item.description}}</p>
+            <v-text-field
+              v-if="item.type == 'text' && item.name == 'contactPhone'"
+              prefix="+1"
+              placeholder=" "
+              mask="(###) ###-####"
+              :name="item.name"
+              :label="item.placeholder"
+              v-model="item.value"
+              :ref="item.name"
+              @focus="cardActivate(item.name)"
+              :rules="[rules.required, rules.validPhone]"/>
+            <v-text-field
+              v-else-if="item.type == 'text' && item.name == 'address2'"
+              :name="item.name"
+              :label="item.placeholder"              
+              v-model="item.value"
+              :ref="item.name"
+              @focus="cardActivate(item.name)"/>
+            <v-text-field
+              v-else-if="item.type == 'text'"
+              :name="item.name"
+              :label="item.placeholder"              
+              v-model="item.value"
+              :ref="item.name"
+              @focus="cardActivate(item.name)"
+              @keyup="item.inputtype == 'number' ? item.value = formatNumber(item.value) : ''"
+              :rules="item.name == 'numberOfDrivers' ? [true] : [rules.required]"/>
+            <v-text-field
+              v-if="item.type == 'textarea'"
+              :name="item.name"
+              :label="item.label"
+              v-model="item.value"
+              :ref="item.name"
+              @focus="cardActivate(item.name)"
+              :rules="[rules.required]"
+              multi-line />
+            <v-btn
+              v-if="item.type == 'button'" 
+              color="primary"  
+              flat 
+              :ref="item.name"
+              :class="'float-' + item.position"
+              @focus="cardActivate(item.name)">{{item.title}}</v-btn>
+
+            <v-radio-group 
+              v-if="item.type == 'radio-group'" 
+              v-model="item.value" 
+              class="pt-1" 
+              :ref="item.name"
+              @change="cardActivate(item.name)">
+              <v-radio
+                v-for="element in item.elements"
+                :label="element.title"
+                :value="element.key"></v-radio>
+            </v-radio-group>
+            <template v-if="item.type=='checkbox-group'"
+                v-for="(element, index) in item.elements">
+                <v-checkbox                
+                    :key="index"
+                    v-model="element.value"
+                    :label="element.title"
+                    type="checkbox"
+                    :ref="item.name + '_' + index"
+                    @focus="cardActivate(element.key)"/>
+            </template>
+            <template v-if="item.type == 'datepicker'">
+              <v-dialog
+                persistent
+                lazy
+                :style="{width: '100%'}">
+                <v-text-field
+                  slot="activator"
+                  :label="item.placeholder"
+                  v-model="item.value"
+                  append-icon="keyboard_arrow_down"
+                  readonly
+                  :ref="item.name"
+                  @focus="cardActivate(item.name)"
+                  :rules="[rules.required]"
+                ></v-text-field>
+                <v-date-picker @input="item.value = formatDate($event)" scrollable actions autosave>
+                  <template slot-scope="{ save, cancel }">
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                    </v-card-actions>
+                  </template>
+                </v-date-picker>
+              </v-dialog>
+            </template>
+            
+          </div>
+        </v-form>
+      </v-card-actions>
+    </v-card>
+  </v-flex>
+</v-layout>

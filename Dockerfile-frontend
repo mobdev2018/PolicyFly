@@ -1,0 +1,8 @@
+FROM node:8-alpine
+RUN apk --no-cache --update add gzip
+RUN mkdir -p /opt/frontend
+ADD ./package.json /opt/frontend
+ADD ./package-lock.json /opt/frontend
+WORKDIR /opt/frontend
+RUN npm install
+ADD . /opt/frontend

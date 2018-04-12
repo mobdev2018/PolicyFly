@@ -1,0 +1,30 @@
+<v-form ref="questionForm" class="inner-content pb-4" @submit.prevent="">
+
+  <div class="inline-field" :style="{width: item.width + '%'}" v-for="item in data.content">
+    <p v-if="item.description" class="ma-0 grey--text">{{item.description}}</p>
+    
+    <v-radio-group 
+        v-if="item.type == 'radio-group'" 
+        v-model="item.value" 
+        class="pt-1" 
+        :ref="item.name"
+        @change="cardActivate(item.name)">
+        <v-radio
+          v-for="element in item.elements"
+          :label="element.title"
+          :value="element.key">
+        </v-radio>
+    </v-radio-group>
+
+    <template v-if="item.type=='checkbox-group'"
+      v-for="(element, index) in item.elements">
+      <v-checkbox                
+          :key="index"
+          v-model="element.value"
+          :label="element.title"
+          type="checkbox"
+          :ref="item.name + '_' + index"
+          @focus="cardActivate(element.key)"/>
+    </template>
+  </div>    
+</v-form>

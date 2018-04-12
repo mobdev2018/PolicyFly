@@ -1,0 +1,11 @@
+<div class="main-container">
+  <div class="navbar-view">
+    <Navbar role="Broker"/>
+    <NavbarHeader :title="title" :isActions="isActionsButton" :actions="showFAB" :tabList="policiesTabList"/>
+  </div>
+  <div class="page-view">
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+  </div>
+</div>

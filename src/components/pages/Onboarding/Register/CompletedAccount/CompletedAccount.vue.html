@@ -1,0 +1,15 @@
+<v-container fluid class="completed-container">
+	<v-layout row>
+		<v-flex xs12 class="text-xs-center">
+            <p class="fs-36 fw-light m-t-48">Thanks for creating your account, {{username}}!</p>
+            <p class="fs-16 mt-4">You’re all set.<br>  
+                Be sure to bookmark the link below.</p>
+            <v-flex xs12 class="mt-4">
+                <a href="/home" class="link-text">https://www.policyfly.com/home</a>                
+            </v-flex>
+            <v-flex class="mt-5">
+                <v-btn round color="primary" large dark class="login-button" router :to="{path: '/login'}">Login</v-btn>
+            </v-flex>
+		</v-flex>
+	</v-layout>
+</v-container>

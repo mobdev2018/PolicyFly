@@ -1,0 +1,14 @@
+<v-form ref="questionForm" validate-on-blur class="inner-content pb-4">
+	<div class="inline-field" :style="{width: item.width + '%'}" v-for="item in data.content">
+		<template v-if="item.type == 'checkbox-group'">
+            <v-checkbox
+                v-for="(element, index) in item.elements"
+                :key="index"
+                v-model="element.value"
+                :label="element.title"
+                type="checkbox"
+                :ref="item.name + '_' + index"
+                @change="cardActivate(item.name)"/>
+        </template>
+	</div>
+</v-form>

@@ -1,0 +1,37 @@
+<v-container fluid class="boarding-container">
+	<v-layout class="main-layout">
+		<v-flex xs12 class="logo-view mt-5 ml-4">
+			<img src="~src/assets/logo_icon.png">
+		</v-flex>
+		<v-flex xs12 class="mt-0">
+			<v-card class="login-dialog elevation-8">
+				<v-card-title primary-title class="welcome-view">
+					<div>
+						<p class="fs-36 fw-light">Welcome</p>
+					</div>
+				</v-card-title>
+				<v-card-actions class="content-view">
+					<v-form validate-on-blur class="inner-content mt-3 px-4 py-5" ref="loginForm">
+						<v-text-field
+							validate-on-blur
+							ref="email"
+							label="Email"
+							v-model="email"
+							:rules="[rules.requiredEmail, rules.validEmail, rules.correctCredential]"
+							@keyup="onChangeInput($event, 'email')"/>
+						<v-text-field
+							validate-on-blur
+							ref="password"
+							label="Password"
+							v-model="password"
+							type='password'
+							:rules="[rules.requiredPassword, rules.correctCredential]"
+							@keyup="onChangeInput($event, 'password')"/>
+						<v-btn sm12 flat class="btn-flat mt-3 forgot-button" router to="/forgotpassword">Forgot Password?</v-btn>
+						<v-btn sm12 class="btn-default mt-3 login-button" v-on:click="onLogin">Login</v-btn>
+					</v-form>
+				</v-card-actions>
+			</v-card>
+		</v-flex>
+	</v-layout>
+</v-container>

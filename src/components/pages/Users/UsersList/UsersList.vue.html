@@ -1,0 +1,77 @@
+<v-container fluid class="home-container">
+    <v-layout column>
+        <div class="main-layout">
+            <v-flex xs10 sm4 class="search-bar">
+                <v-icon small sm3 class="search-icon">search</v-icon>
+                <v-text-field label="Search" v-model="search" class="mt-1 search-text" v-on:focus="selectedIndex=-1"/>
+            </v-flex>
+            <v-flex xs12 lg12>
+                <v-data-table
+                    v-bind:headers="headers"
+                    v-bind:items="items"
+                    v-bind:search="search"
+                    class="elevation-2">
+                        <template slot="items" slot-scope="props">
+                        <tr :active="props.index==selectedIndex">
+                            <td class="td-text" width="150" @click="onSelected(props)">{{ props.item.fname }}</td>
+                            <td class="td-text" width="150" @click="onSelected(props)">{{ props.item.lname }}</td>
+                            <td class="td-text" width="280" @click="onSelected(props)">{{ props.item.email }}</td>
+                            <td class="td-text" width="150" @click="onSelected(props)">{{ props.item.role }}</td>
+                            <td class="td-edit-button">
+                                <v-btn fab flat small color="grey lighten-1" class="edit-button" v-on:click="onEdit(props.index)"><v-icon>edit</v-icon></v-btn>
+                            </td>
+                            <td class="td-delete-button">
+                                <v-btn fab flat small color="grey lighten-1" class="delete-button" v-on:click="onDelete(props.index)"><v-icon>delete</v-icon></v-btn>                                
+                            </td>
+                        </tr>
+                        
+                        </template>
+                    <template slot="pageText" slot-scope="{ pageStart, pageStop }">
+                        {{ pageStart }} - {{ pageStop }} of {{items.length}}
+                    </template>
+                </v-data-table>	
+            </v-flex>
+        </div>
+        
+        <v-flex>
+            <v-alert
+                :value="removedAlert"
+                transition="scale-transition"
+                class="alert-view">
+                User has been removed.
+                <v-btn flat color="white" @click="removedAlert = false" class="m-l-48">close</v-btn>
+            </v-alert>
+            <v-alert
+                :value="createdAlert"
+                transition="scale-transition"
+                class="alert-view">
+                User has been created.
+                <v-btn flat color="white" @click="createdAlert = false" class="m-l-48">close</v-btn>
+            </v-alert>
+            <v-menu top left offset-y :nudge-top="12" :close-on-content-click="true" v-model="openedMenu" class="fab-view">
+                <v-btn fab dark slot="activator" class="settings-button">
+                    <v-icon v-if="!openedMenu" dark>settings</v-icon>
+                    <v-icon v-else dark>close</v-icon>
+                </v-btn>				
+                <v-card class="popup-view">
+                    <v-list class="menu-header-view pt-0 pb-4">
+                        <v-list-tile class="menu-title-view">
+                            <v-list-tile-content>
+                                <v-list-tile-title>Hi, Ian!</v-list-tile-title>
+                                <v-list-tile-sub-title>What would you like to do today?</v-list-tile-sub-title>
+                            </v-list-tile-content>
+                        </v-list-tile>						
+                    </v-list>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                        <v-btn flat @click="onCreateUser" class="menu-button">
+                            <v-icon small class="mr-3">add_circle_outline</v-icon> 
+                            Create User
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>				
+            </v-menu>
+            
+        </v-flex>
+    </v-layout>
+</v-container>

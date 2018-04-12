@@ -1,0 +1,65 @@
+.policydocs-container
+  display: inherit !important
+  max-width: none !important
+  overflow: auto
+  height: 100%
+  .main-view
+    .drop-view
+      margin: 0
+      .card-container
+        max-width: 900px
+        margin: 0 auto
+        .card-view
+          display: flex
+          width: 100%
+          align-items: center
+          .left-view
+            height: 814px
+            width: 240px
+            color: #9b9b9b
+            .list
+              padding: 0
+              .list__tile__action
+                min-width: 32px
+                .icon
+                  color: #c6c5c7
+              .list__tile__content
+                color: #c6c5c7
+              .list__tile__avatar
+                .icon
+                  color: #c6c5c7
+              .list__tile:hover
+                background-color: rgba(74, 144, 226, 0.29)
+                .list__tile__action
+                  min-width: 32px
+                  .icon
+                    color: grey
+                .list__tile__content
+                  color: black
+                .list__tile__avatar
+                  .icon
+                    color: grey
+              .selected-row
+                background-color: rgba(74, 144, 226, 0.29)
+                .list__tile__action
+                  min-width: 32px
+                  .icon
+                    color: grey
+                .list__tile__content
+                  color: black
+                .list__tile__avatar
+                  .icon
+                    color: grey
+          .right-view
+            flex: 1
+            height: 814px
+            color: #9b9b9b
+            .pdf-view
+              margin: 0
+              height: 100% !important
+  .text-grey
+    color: #9b9b9b !important
+  .drag-view
+    width: 100%
+    height: 100%
+    background-color: rgba(225, 250, 227, 0.3)

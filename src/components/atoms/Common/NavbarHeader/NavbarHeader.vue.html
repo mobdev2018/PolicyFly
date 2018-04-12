@@ -1,0 +1,31 @@
+<div class="navbar-header">
+  <v-container class="pa-0 nav-header-containter">
+    <v-layout row wrap>
+      <v-flex>
+        <div class="nav-title">
+          <p class="fs-36 fw-light color-white">{{ isAutoTitle ? pageTitle : title }}</p>
+        </div>
+        <div class="nav-header">
+          <v-tabs dark>
+            <v-tabs-bar>
+              <v-tabs-item
+                :class="{ active: index === currentIndex }"
+                class="fs-13 fw-bold p-r-36"
+                @click.prevent="onSelectTab(index)"
+                v-for="(tab, index) in tabList"
+                :key="index">
+                {{ tab.label }}
+              </v-tabs-item>
+              <v-spacer></v-spacer>
+              <v-tabs-item v-if="isActions" class="pr-0 actions-item">
+                <v-btn flat color="blue" class="fs-13 fw-bold actions-button" @click="actions">
+                  Actions<v-icon small class="ml-2 mb-0 fs-18 settings-icon">settings</v-icon>
+                </v-btn>
+              </v-tabs-item>
+            </v-tabs-bar>
+          </v-tabs>              
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</div>

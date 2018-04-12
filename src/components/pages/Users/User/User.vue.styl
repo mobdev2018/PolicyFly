@@ -1,0 +1,21 @@
+.user-container
+  height: 100%
+  overflow: auto
+  .main-layout
+    width: 100%
+    max-width: 900px
+    margin: 0 auto
+  .alert-view
+    height: 56px
+    padding-right: 0px
+    background-color: #4D4F53 !important
+    border: none
+    position: fixed
+    bottom: 15%
+    right: calc(5% + 80px)
+    @media (max-width: 1100px)
+      right: calc(0% + 80px)
+    @media (min-width: 1100px) and (max-width: 1300px)
+      right: calc(5% + 80px)
+    @media (min-width: 1300px)
+      right: calc(10% + 80px)

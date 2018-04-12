@@ -1,0 +1,77 @@
+<v-form ref="questionForm" lazy-validation class="inner-content pb-4">
+    <div class="inline-field" :style="{width: item.width + '%'}" v-for="item in data.content">
+        <p v-if="item.description" class="ma-0 grey--text">{{item.description}}</p>
+        
+        <template v-if="item.type == 'checkbox-group'">
+            <template
+                v-for="(element, index) in item.elements">
+                <v-checkbox                
+                    :key="index"
+                    v-model="element.value"
+                    :label="element.title"
+                    type="checkbox"
+                    :ref="item.name + '_' + index"
+                    @focus="cardActivate(element.key)"
+                    @change="onChange()"/>
+
+                <template v-if="element.children && element.value" v-for="(subItem, subindex) in element.children">
+                    <template v-if="subItem.type == 'checkbox-group'">
+                        <v-flex class="ml-4" :style="{width: subItem.width + '%'}">
+                            <template v-for="(subElement, i) in subItem.elements">
+                                <v-checkbox                
+                                    :key="i"
+                                    v-model="subElement.value"
+                                    :label="subElement.title"
+                                    type="checkbox"
+                                    :ref="subItem.name + '_' + i"
+                                    @focus="cardActivate(item.name)"
+                                    :disabled="!element.value"
+                                    :mask="subElement.inputtype=='number' ? customMask(subElement.value) : ''"/>
+                                
+                                <template v-if="subElement.children && subElement.value" v-for="(textItem, textIndex) in subElement.children">
+                                    <div v-if="textItem.type == 'text'" :style="{width: textItem.width + '%'}" class="pl-4">
+                                        <v-text-field
+                                            :name="textItem.name"
+                                            :label="textItem.placeholder"
+                                            v-model="textItem.value"
+                                            :ref="textItem.name"
+                                            @focus="cardActivate(item.name)"
+                                            :disabled="!subElement.value"
+                                            :mask="textItem.inputtype=='number' ? customMask(textItem.value) : ''"/> 
+                                    </div>
+                                </template>
+                                
+                            </template>
+                        </v-flex>
+                    </template>
+
+                    <div v-if="subItem.type == 'text'" :style="{width: subItem.width + '%'}" class="pl-4">
+                        <v-text-field
+                            :name="subItem.name"
+                            :label="subItem.placeholder"
+                            v-model="subItem.value"
+                            :ref="subItem.name"
+                            @focus="cardActivate(subItem.name)"
+                            :disabled="!element.value"
+                            :mask="subItem.inputtype=='number' ? customMask(subItem.value) : ''"/> 
+                    </div>
+
+                    <div v-if="subItem.type == 'textarea'" :style="{width: subItem.width + '%'}" class="pl-4">
+                        <v-text-field
+                            :name="subItem.name"
+                            :label="subItem.placeholder"
+                            v-model="subItem.value"
+                            :ref="subItem.name"
+                            @focus="cardActivate(subItem.name)"
+                            class="textarea-view"
+                            multi-line
+                            :disabled="!element.value"/> 
+                    </div>
+                    
+                    
+                </template>
+            </template>
+            
+        </template>       
+    </div>    
+</v-form>

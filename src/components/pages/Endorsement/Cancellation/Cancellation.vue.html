@@ -1,0 +1,184 @@
+<v-container class="cancellation-container">
+  <v-layout column class="main-layout">
+
+    <!-- Basic Information -->
+    <v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Basic Information</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<v-flex class="row-view">
+					<v-flex>
+						<p class="title-text">Primary Named Insured</p>
+						<p class="content-text m-t-12">Apple Industries</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Mailing Address</p>
+						<p class="content-text m-t-12">134 W. 26th St. New York NY, 10001</p>
+					</v-flex>
+        </v-flex>
+
+        <v-flex class="row-view m-t-36">
+          <v-flex xs6>
+            <v-dialog
+              persistent
+              lazy>
+              <v-text-field
+                slot="activator"
+                label="Expiration Date"
+                v-model="expirationDateFormatted"
+                append-icon="keyboard_arrow_down"
+                readonly/>
+              <v-date-picker v-model="expirationDate" @input="expirationDateFormatted = formatDate($event)" scrollable actions autosave>
+                <template slot-scope="{ save, cancel }">
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                  </v-card-actions>
+                </template>
+              </v-date-picker>
+            </v-dialog>
+          </v-flex>
+        </v-flex>
+
+        <v-flex>
+					<v-text-field
+            label="Reason for Cancellation"
+            v-model="reason"
+            :class="reason.length > 85 ? 'textarea-view' : 'textarea-single-view'"
+            :multi-line="true"/>
+        </v-flex>
+        
+			</v-card-actions>
+    </v-card>
+ 
+    <!-- Endorsement Quote -->
+    <v-card flat class="card-view mt-5 m-b-180">
+      <v-card-title class="title-view justify-space-between">
+        <p class="fs-20 fw-medium mb-2">Endorsement Quote</p>
+      </v-card-title>
+      <v-card-actions class="quote-view m-t-24 elevation-3" v-for="(quote, quoteIndex) in quotes">
+        <v-flex clas class="subtitle-view align-center quote-title-view">
+          <p class="fs-16">Quote {{quoteIndex+1}}</p>
+          <v-menu offset-y class="limitsRequested-view">
+            <v-text-field
+              slot="activator"
+              v-model="quote.limitsRequested"
+              append-icon="keyboard_arrow_down"
+              hide-details
+              readonly/>
+            <v-list>
+              <v-list-tile v-for="item in limitsRequestedItems" :key="item.title" @click="selectLimit(quoteIndex, item.title)">
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>	
+        <!-- Annual items -->
+        <div class="ma-0" v-for="(annualItem, annualItemIndex) in quote.annualItems" v-if="checkLimit(annualItemIndex, quote.limitsRequested)">
+          <v-flex class="row-view m-t-36">
+            <v-flex xs2>
+              <p class="title-text">Limit</p>
+              <p class="content-text">{{annualItem.limit}}</p>
+            </v-flex>
+            <v-flex xs8>
+              <v-flex class="row-view">
+                <v-flex xs3 class="p-r-12">
+                  <v-text-field
+                    label="Delta Premium"
+                    v-money="money"
+                    v-model.lazy="annualItem.deltaPremium"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+                <v-flex xs3 class="p-r-12">
+                  <v-text-field
+                    label="P/R Premium"
+                    v-money="money"
+                    v-model.lazy="annualItem.prPremium"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+                <v-flex xs3 class="p-r-12">
+                  <v-text-field
+                    label="Delta Taxes"
+                    v-money="money"
+                    v-model.lazy="annualItem.deltaTaxes"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+                <v-flex xs3 class="p-r-12"> 
+                  <v-text-field
+                    label="P/R Taxes"
+                    v-money="money"
+                    v-model.lazy="annualItem.prTaxes"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+              </v-flex>
+              <v-flex class="row-view m-t-24">
+                <v-flex xs3 class="p-r-12">
+                  <v-text-field
+                    label="Limit Fee"
+                    v-model="annualItem.limitFees.limitFee"/>
+                </v-flex>
+                <v-flex xs3 offset-xs3 class="p-r-12">
+                  <v-text-field
+                    label="Delta Amount"
+                    v-money="money"
+                    v-model.lazy="annualItem.limitFees.deltaAmount"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+                <v-flex xs3 class="p-r-12">            
+                  <v-text-field
+                    label="P/R Amount"
+                    v-money="money"
+                    v-model.lazy="annualItem.limitFees.prAmount"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+              </v-flex>
+            </v-flex>
+            <v-flex xs2>
+              <p class="title-text text-right">Delta Subtotal</p>
+              <p class="content-text text-right">${{ formatPrice(annualItem.deltaSubTotal) }}</p>
+            </v-flex>
+          </v-flex>          
+        </div>
+        
+        <div v-if="quote.limitsRequested != 'Limit'" class="total-view">
+          <v-flex xs8 offset-xs2 class="display-flex m-t-12">
+            <v-flex xs3 class="p-r-12">            
+              <v-text-field
+                label="Total Fee"
+                v-model="quote.totalFeeAmount.totalFee"/>
+            </v-flex>
+            <v-flex xs3 offset-xs3 class="p-r-12">            
+              <v-text-field
+                label="Delta Amount"
+                v-money="money"
+                v-model.lazy="quote.totalFeeAmount.deltaAmount"
+                @keyup="calcTotalAmount(quoteIndex)"/>
+            </v-flex>
+            <v-flex xs3 class="p-r-12">            
+              <v-text-field
+                label="P/R Amount"
+                v-money="money"
+                v-model.lazy="quote.totalFeeAmount.prAmount"
+                @keyup="calcTotalAmount(quoteIndex)"/>
+            </v-flex>
+          </v-flex>
+          <v-flex class="row-view m-t-24 fs-16">
+            <p class="m-l-auto">Annual Total</p>
+            <p class="m-l-12 text-right" :style="{'min-width': '150px'}">${{ formatPrice(quote.annualTotal) }}</p>
+          </v-flex>
+          <v-flex class="row-view m-t-12 fs-16">
+            <p class="m-l-auto">Delta Total</p>
+            <p class="m-l-12 text-right" :style="{'min-width': '150px'}">${{ formatPrice(quote.deltaTotal) }}</p>
+          </v-flex>
+          <v-flex class="row-view m-t-12 m-b-48 fs-16">
+            <p class="m-l-auto">Prorated Total</p>
+            <p class="m-l-12 text-right" :style="{'min-width': '150px'}">${{ formatPrice(quote.proratedTotal) }}</p>
+          </v-flex>
+        </div>
+      </v-card-actions>
+    </v-card>
+
+  </v-layout>
+
+</v-container>

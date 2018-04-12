@@ -1,0 +1,304 @@
+<v-container class="submit-quotes-container">
+  <v-layout column class="main-layout">
+
+    <!-- Basic Information -->
+    <v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Basic Information</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<v-flex class="row-view">
+					<v-flex>
+						<p class="title-text">Primary Named Insured</p>
+						<p class="content-text m-t-12">Acme, Inc.</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Mailing Address</p>
+						<p class="content-text m-t-12">134 W. 26th St. #1100 New York NY, 10001</p>
+					</v-flex>
+        </v-flex>
+
+        <v-flex class="row-view m-t-36">
+          <v-flex xs6>
+            <v-dialog
+              persistent
+              lazy>
+              <v-text-field
+                slot="activator"
+                label="Effective Date"
+                v-model="effectiveDateFormatted"
+                append-icon="keyboard_arrow_down"
+                readonly/>
+              <v-date-picker v-model="effectiveDate" @input="effectiveDateFormatted = formatDate($event)" scrollable actions autosave>
+                <template slot-scope="{ save, cancel }">
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                  </v-card-actions>
+                </template>
+              </v-date-picker>
+            </v-dialog>
+          </v-flex>
+
+          <v-flex xs6>
+            <v-dialog
+              persistent
+              lazy>
+              <v-text-field
+                slot="activator"
+                label="Expiration Date"
+                v-model="expirationDateFormatted"
+                append-icon="keyboard_arrow_down"
+                readonly/>
+              <v-date-picker v-model="expirationDate" @input="expirationDateFormatted = formatDate($event)" scrollable actions autosave>
+                <template slot-scope="{ save, cancel }">
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                  </v-card-actions>
+                </template>
+              </v-date-picker>
+            </v-dialog>
+          </v-flex>
+        </v-flex>
+        
+			</v-card-actions>
+    </v-card>
+    
+    <!-- Exposure Breakdown -->
+    <v-card flat class="card-view mt-5">
+      <v-card-title class="title-view">
+        <p class="fs-20 fw-medium mb-2">Exposure Breakdown</p>
+      </v-card-title>
+      <v-card-actions class="content-view m-t-24 elevation-3">
+        <v-flex class="row-view">
+          <v-flex>
+            <p class="title-text">Gross Receipts</p>
+            <p class="content-text m-t-12">$424,037,496</p>
+          </v-flex>
+          <v-flex xs6>
+            <p class="title-text">LRO</p>
+            <p class="content-text m-t-12">22,886 Sq.Ft.</p>
+          </v-flex>
+        </v-flex>
+
+        <!-- Vehicle -->
+        <div class="m-t-48">
+          <v-flex clas class="subtitle-view">
+            <p class="fs-16">Vehicles</p>
+          </v-flex>	
+          <v-flex class="row-view m-t-24">
+            <v-flex>
+              <p class="title-text">Private Passenger</p>
+              <p class="content-text m-t-12">16</p>
+            </v-flex>
+            <v-flex xs3>
+              <p class="title-text">Truck Tractor</p>
+              <p class="content-text m-t-12">2</p>
+            </v-flex>
+            <v-flex xs3>
+              <p class="title-text">Trailer</p>
+              <p class="content-text m-t-12">0</p>
+            </v-flex>
+            <v-flex xs3>
+              <p class="title-text">Other</p>
+              <p class="content-text m-t-12">0</p>
+            </v-flex>
+          </v-flex>
+        </div>
+      </v-card-actions>
+    </v-card>
+
+    <!-- Quote Details -->
+    <v-card flat class="card-view mt-5">
+      <v-card-title class="title-view">
+        <p class="fs-20 fw-medium mb-2">Quote Details</p>
+      </v-card-title>
+      <v-card-actions class="content-view m-t-24 elevation-3">
+        <div>
+          <v-flex clas class="subtitle-view">
+            <p class="fs-16">Exclusions</p>
+          </v-flex>	
+          <v-flex class="row-view m-t-24">
+            <v-checkbox
+              v-model="exclusion"
+              label="Activate Designated Operations Exclusion"
+              type="checkbox"
+              ref="exclusion"/>
+          </v-flex>
+        </div>
+
+        <div class="m-t-24">
+          <v-flex clas class="subtitle-view">
+            <p class="fs-16">State Amendatory Forms</p>
+          </v-flex>	
+          <v-flex class="row-view m-t-24">
+            <v-checkbox
+              v-model="ny"
+              label="NY"
+              type="checkbox"
+              ref="ny"/>
+          </v-flex>
+        </div>
+
+        <div class="m-t-24">
+          <v-flex clas class="subtitle-view">
+            <p class="fs-16">Commission</p>
+          </v-flex>	
+          <v-flex class="row-view m-t-24">
+            <v-flex xs3>
+              <v-text-field
+                label="Lead Commission"
+                v-model="leadCommission"
+                hint="Input %"
+                persistent-hint
+                type="number" 
+                max="100"
+                min="0"/>
+            </v-flex>
+            <v-flex xs3 class="m-l-36">
+              <v-text-field
+                label="Excess Commission"
+                v-model="excessCommission"
+                hint="Input %"
+                persistent-hint
+                type="number"
+                max="100"
+                min="0" />
+            </v-flex>
+          </v-flex>
+        </div>
+      </v-card-actions>
+    </v-card>
+
+    <!-- Application Quote -->
+    <v-card flat class="card-view mt-5">
+      <v-card-title class="title-view">
+        <p class="fs-20 fw-medium mb-2">Application Quote</p>
+      </v-card-title>
+      <v-card-actions class="quote-view m-t-24 elevation-3" v-for="(quote, quoteIndex) in quotes">
+        <v-flex clas class="subtitle-view align-center quote-title-view">
+          <p class="fs-16">Quote {{quoteIndex+1}}</p>
+          <v-menu offset-y class="limitsRequested-view">
+            <v-text-field
+              slot="activator"
+              v-model="quote.limitsRequested"
+              append-icon="keyboard_arrow_down"
+              readonly/>
+            <v-list>
+              <v-list-tile v-for="item in limitsRequestedItems" :key="item.title" @click="selectLimit(quoteIndex, item.title)">
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>	
+        <!-- Annual items -->
+        <div class="ma-0" v-for="(annualItem, annualItemIndex) in quote.annualItems" v-if="checkLimit(annualItemIndex, quote.limitsRequested)">
+          <v-flex class="row-view m-t-36">
+            <v-flex xs2>
+              <p class="title-text">Limit</p>
+              <p class="content-text">{{annualItem.limit}}</p>
+            </v-flex>
+            <v-flex xs8>
+              <v-flex class="row-view">
+                <v-flex>
+                  <v-menu offset-y class="carrier-view">
+                    <v-text-field
+                      label="Carrier"
+                      slot="activator" 
+                      v-model="annualItem.carrier"
+                      append-icon="keyboard_arrow_down"
+                      readonly/>
+                    <v-list>
+                      <v-list-tile v-for="item in carrierItems" :key="item.title" @click="annualItem.carrier=item.title">
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
+                </v-flex>
+                <v-flex xs3 class="m-l-12">
+                  <v-text-field
+                    label="Premium"
+                    v-money="money"
+                    v-model.lazy="annualItem.premium"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                </v-flex>
+                <v-flex xs3 class="m-l-12"> 
+                  <v-text-field
+                    label="Taxes"
+                    v-money="money"
+                    v-model.lazy="annualItem.taxes"
+                    @keyup="calcTotalAmount(quoteIndex)"/>                  
+                  <v-btn flat color="primary" class="float-right" @click="addLimitFee(annualItem.limitFees)">Add Limit Fee</v-btn>
+                </v-flex>
+              </v-flex>
+              <v-flex class="row-view m-t-24" v-for="(feeItem, index) in annualItem.limitFees">
+                <v-flex xs4 class="m-l-auto">
+                  <v-text-field
+                    label="Limit Fee"
+                    v-model="feeItem.limitFee"/>
+                </v-flex>
+                <v-flex xs3 class="m-l-12">            
+                  <v-text-field
+                    label="Amount"
+                    v-money="money"
+                    v-model.lazy="feeItem.limitAmount"
+                    @keyup="calcTotalAmount(quoteIndex)"/>
+                  <v-btn flat color="grey" class="float-right" @click="removeLimitFee(annualItem.limitFees, index)">Remove</v-btn>
+                </v-flex>
+              </v-flex>
+            </v-flex>
+            <v-flex xs2>
+              <p class="title-text text-right">Annual Subtotal</p>
+              <p class="content-text text-right">${{ formatPrice(annualItem.subTotal) }}</p>
+            </v-flex>
+          </v-flex>          
+        </div>
+        
+        <div v-if="quote.limitsRequested != 'Limit'" class="total-view">
+          <v-flex xs10 class="total-button-view m-t-12">
+            <v-btn flat color="primary" class="float-left" @click="addTotalFee(quoteIndex)">Add Total Fee</v-btn>
+          </v-flex>          
+          <v-flex xs10 class="row-view m-t-12" v-for="(feeItem, index) in quote.totalFeeAmount">
+            <v-flex xs4 class="m-l-auto">            
+              <v-text-field
+                label="Total Fee"
+                v-model="feeItem.totalFee"/>
+            </v-flex>
+            <v-flex xs3 class="m-l-12">            
+              <v-text-field
+                label="Amount"
+                v-money="money"
+                v-model.lazy="feeItem.amount"
+                @keyup="calcTotalAmount(quoteIndex)"/>
+              <v-btn flat color="grey" class="float-right" @click="removeTotalFee(quoteIndex, index)">Remove</v-btn>
+            </v-flex>
+          </v-flex>
+          <v-flex class="row-view m-t-24 fs-16">
+            <p class="m-l-auto">Annual Total</p>
+            <p class="m-l-60">${{ formatPrice(quote.annualTotal) }}</p>
+          </v-flex>
+        </div>
+        <v-flex class="m-t-36">
+          <v-btn flat color="grey" class="delete-quote-btn" @click="onDeleteQuote(quoteIndex)">Delete Quote</v-btn>
+        </v-flex>        
+      </v-card-actions>
+    </v-card>
+
+    <v-btn flat color="primary" class="m-b-120 m-l-auto" @click="onAddQuote">Add Quote</v-btn>
+  </v-layout>
+
+  <div class="footerbar-view">
+    <v-layout row wrap>
+      <v-flex sm12>
+        <v-toolbar class="footer-content">
+          <v-btn flat color="grey" v-on:click="onCancel">Cancel</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" v-on:click="onSubmit">Submit</v-btn>
+        </v-toolbar>
+      </v-flex>
+    </v-layout>
+  </div>
+</v-container>
+
+    

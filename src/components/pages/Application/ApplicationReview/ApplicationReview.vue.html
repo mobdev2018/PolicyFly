@@ -1,0 +1,453 @@
+<v-layout row class="application-review-container pa-2">
+	<v-flex class="main-view">
+		<!-- Basic Information -->
+		<v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Basic Information</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<v-flex class="row-view">
+					<v-flex>
+						<p class="title-text">Primary Named Insured</p>
+						<p class="content-text m-t-12">Acme, Inc.</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Website URL</p>
+						<p class="content-text m-t-12">acmeinc.org</p>
+					</v-flex>
+				</v-flex>
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Mailing Address</p>
+						<p class="content-text m-t-12">134 W 26th St. Suite 1100</p>
+						<p class="content-text">New York NY, 10010</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Limits Requested</p>
+						<p class="content-text m-t-12">$25,000,000.00</p>
+					</v-flex>
+				</v-flex>
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Contact Person</p>
+						<p class="content-text m-t-12">Jane Doe</p>
+						<p class="content-text">Managing Director</p>
+						<p class="content-text">+1 (845) 555 - 5555</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Description of Operations</p>
+						<p class="content-text m-t-12">Builds amazing things and provides supreme service to their clients. The fastest growing retailer in their market and growing more and more everyday.</p>
+					</v-flex>
+				</v-flex>
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Effective Date</p>
+						<p class="content-text m-t-12">December 1, 2017</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Additional Named Insured</p>
+						<p class="content-text m-t-12">Prestige Workdwide, LLC</p>
+						<p class="content-text">Big Apple Management, LLC</p>
+					</v-flex>
+				</v-flex>
+				
+			</v-card-actions>
+		</v-card>
+
+		<!-- Policy Details -->
+		<v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Policy Details</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<!-- Underlying Carrier Information -->
+				<div>
+					<v-flex clas class="subtitle-view">
+						<p class="fs-16">Underlying Carrier Information</p>
+					</v-flex>	
+					<v-expansion-panel class="m-t-24 mx-0">
+						<v-expansion-panel-content v-for="item in [1, 2, 3]">
+							<div slot="header" class="fs-14">General Liability</div>
+							<v-card class="card-content">
+								<v-flex class="row-view">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Limits Provided</p>
+										<p>$1,000,000.00</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Annual Premium</p>
+										<p>$780,000.00</p>
+									</v-flex>
+								</v-flex>
+
+								<v-flex class="row-view mt-2">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Limits Per Location</p>
+										<p>No</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Policy Term Start</p>
+										<p>08/21/2017</p>
+									</v-flex>
+								</v-flex>
+
+								<v-flex class="row-view mt-2">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Host Liqure Included</p>
+										<p>No</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Policy Term End</p>
+										<p>08/21/2017</p>
+									</v-flex>
+								</v-flex>
+
+								<v-flex class="row-view mt-2">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Carrier</p>
+										<p>Berkley Regional</p>
+									</v-flex>
+								</v-flex>
+								
+							</v-card>
+						</v-expansion-panel-content>
+					</v-expansion-panel>
+				</div>
+
+				<!-- Expiring Umbrella -->
+				<div>
+					<v-flex clas class="subtitle-view mt-5">
+						<p class="fs-16">Expiring Umbrella</p>
+					</v-flex>
+					<div class="m-t-24 mx-0 elevation-1">
+						<v-layout row justify-space-between  class="grid-header">
+							<v-flex xs4>
+								Carrier
+							</v-flex>
+							<v-flex xs4 class="text-center">
+								Limits Provided
+							</v-flex>
+							<v-flex xs4 class="text-right">
+								Annual Premium
+							</v-flex>
+						</v-layout>
+						<v-layout row justify-space-between  class="grid-content">
+							<v-flex xs4>
+								Berkley Regional
+							</v-flex>
+							<v-flex xs4 class="text-center">
+								$10,000,000.00
+							</v-flex>
+							<v-flex xs4 class="text-right">
+								$780,000.00
+							</v-flex>
+						</v-layout>
+					</div>
+				</div>
+
+				<!-- Total Ratable Expenses -->
+				<div>
+					<v-flex clas class="subtitle-view mt-5">
+						<p class="fs-16">Total Ratable Expenses</p>
+					</v-flex>
+
+					<v-flex class="row-view m-t-24">
+						<v-flex>
+							<p class="title-text">Gross Receipts</p>
+							<p class="content-text m-t-12">$424,037,496.00</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">Lessors Risk Exposure?</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+					</v-flex>
+					
+					<div class="m-t-24 mx-0 elevation-1">
+						<v-layout row justify-space-between  class="grid-header">
+							<v-flex xs4>
+								Occupants
+							</v-flex>
+							<v-flex xs4 class="text-right">
+								Sq.Ft.
+							</v-flex>
+						</v-layout>
+						<v-layout row justify-space-between  class="grid-content p-x-24 fs-12">
+							<v-flex xs4>
+								Occupant 1
+							</v-flex>
+							<v-flex xs4 class="text-right">
+								3,400
+							</v-flex>
+						</v-layout>
+					</div>
+				</div>
+
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Auto Exposures</p>
+						<p class="content-text m-t-12">Yes</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Private Passenger</p>
+						<p class="content-text m-t-12">1</p>
+					</v-flex>
+				</v-flex>
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Light</p>
+						<p class="content-text m-t-12">0</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Medium</p>
+						<p class="content-text m-t-12">0</p>
+					</v-flex>
+				</v-flex>
+				<v-flex class="row-view m-t-24">
+					<v-flex>
+						<p class="title-text">Heavy/Extra Heavy</p>
+						<p class="content-text m-t-12">2</p>
+					</v-flex>
+					<v-flex xs6>
+						<p class="title-text">Trailers</p>
+						<p class="content-text m-t-12">1</p>
+					</v-flex>
+				</v-flex>
+			</v-card-actions>
+		</v-card>
+
+		<!-- Locations -->
+		<v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Locations</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<v-flex class="row-view">
+					<v-flex>
+						<p class="title-text">Number of Locations</p>
+						<p class="content-text m-t-12">2</p>
+					</v-flex>
+				</v-flex>
+				<div class="m-t-36 mx-0 elevation-1">
+					<v-layout row class="grid-header">
+						<v-flex>
+							Location Name
+						</v-flex>
+					</v-layout>
+					<v-layout row class="grid-content" v-for="item in [1,2]">
+						<v-flex>
+							134 W 26th St. #1100 New York, NY, 10001
+						</v-flex>
+					</v-layout>
+				</div>				
+			</v-card-actions>
+		</v-card>
+
+		<!-- Operations -->
+		<v-card flat class="card-view mt-5">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Operations</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<!-- Retail Operations -->
+				<div>
+					<v-flex clas class="subtitle-view">
+						<p class="fs-16">Retail Operations</p>
+					</v-flex>	
+					<v-expansion-panel class="m-t-24 mx-0">
+						<v-expansion-panel-content v-for="item in [1, 2, 3]">
+							<div slot="header" class="fs-14">Retail Apparel</div>
+							<v-card class="card-content">
+								<v-flex class="row-view">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Gas Exposure</p>
+										<p>Yes</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Number of Pharmacists</p>
+										<p>4</p>
+									</v-flex>
+								</v-flex>
+
+								<v-flex class="row-view mt-2">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Gas Receipts</p>
+										<p>$1,650,000.00</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Number of Prescriptions</p>
+										<p>1,300</p>
+									</v-flex>
+								</v-flex>
+
+								<v-flex class="row-view mt-2">
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Pharmacy Exposure</p>
+										<p>Yes</p>
+									</v-flex>
+									<v-flex xs6 class="item-view">
+										<p class="item-text">Limit of Liability</p>
+										<p>$1,000,000.00</p>
+									</v-flex>
+								</v-flex>
+								
+							</v-card>
+						</v-expansion-panel-content>
+					</v-expansion-panel>
+				</div>
+				<!-- Applicant Operations -->
+				<div class="m-t-60">
+					<v-flex clas class="subtitle-view">
+						<p class="fs-16">Applicant Operations</p>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">Does the Applicant have operations in addition to the Retail Exposure?</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">Does the store provide installation or service of their products?</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">Does store regularly provide demonstrations?</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">Does the applicant conduct or sponsor any off-site events?</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">Store(s) are located in:</p>
+							<p class="content-text m-t-12">Inside shopping mall, Strip center</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">Does the insured re-label any products or sell house brands?</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+					</v-flex>
+				</div>
+			</v-card-actions>
+		</v-card>
+
+		<!-- Safety -->
+		<v-card flat class="card-view m-t-60">
+			<v-card-title class="title-view">
+				<p class="fs-20 fw-medium mb-2">Safety</p>
+			</v-card-title>
+			<v-card-actions class="content-view m-t-24 elevation-3">
+				<div>
+					<v-flex class="row-view">
+						<v-flex xs6>
+							<p class="title-text">Do all stores comply with NFPA101 fire safety requirements?</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">All drivers (including drivers using their personal vehicles for any company business) must have annual MVR's reviewed and no drivers under 21 or over 75; drivers must have less than 3 moving violations annually and no DUI's on record.</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">Does store with escalators professionally maintain them at least quarterly?</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">Advise number of drivers that use their own autos for company business.</p>
+							<p class="content-text m-t-12">1</p>
+						</v-flex>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">In the United States, new escalators must abide by ASME A17.1 standards, and old/historic escalators must conform to the safety guidelines of ASME A17.3. Is evidence of maintenance on file?</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">All product suppliers must evidence a certificate of insurance from an insurer with a US presence demonstrating products liability of at least $5mm. Confirm Certificates obtained.</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+					</v-flex>
+					<v-flex class="row-view m-t-24">
+						<v-flex xs6>
+							<p class="title-text">Confirm that any contractor that works onsite must evidence at least $1mm liability limits and must sign a hold harmless in favor or insured.</p>
+							<p class="content-text m-t-12">Yes</p>
+						</v-flex>
+						<v-flex xs6>
+							<p class="title-text">All stores must have a written program which includes regular floor sweeps mutiple times daily, security procedures to name a few. Please confirm.</p>
+							<p class="content-text m-t-12">No</p>
+						</v-flex>
+					</v-flex>
+				</div>
+			</v-card-actions>
+		</v-card>
+
+	</v-flex>
+
+	<!-- Fab Menu -->
+	<v-menu top left offset-y :nudge-top="12" :close-on-content-click="false" v-model="openedMenu" class="fab-view">
+		<v-btn fab dark slot="activator" class="settings-button">
+			<v-icon v-if="!openedMenu" dark>settings</v-icon>
+			<v-icon v-else dark>close</v-icon>
+		</v-btn>				
+		<v-card class="popup-view">
+			<v-list class="menu-header-view py-0">
+				<v-list-tile class="menu-title-view">
+					<v-list-tile-content>
+						<v-list-tile-title>Hi, John!</v-list-tile-title>
+						<v-list-tile-sub-title>What would you like to do today?</v-list-tile-sub-title>
+					</v-list-tile-content>
+				</v-list-tile>
+				<div>
+					<div class="d-flex m-x-32">
+						<p class="fs-10 fw-bold color-white py-2 my-0">APPLICATION STATUS:</p>
+						<p class="fs-10 fw-bold color-fab-content ml-2 py-2 my-0">REVIEWING</p>
+					</div>
+				</div>	
+			</v-list>
+			<v-divider></v-divider>
+			<v-card-actions>
+				<v-btn flat @click="onFabQuote" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">list</v-icon> 
+					Quote
+				</v-btn>
+				<v-btn flat @click="onEdit" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">edit</v-icon> 
+					Edit
+				</v-btn>
+				<v-btn flat @click="onBackToDraft" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">subdirectory_arrow_left</v-icon> 
+					Back to Draft
+				</v-btn>
+				<v-btn flat @click="onDecline" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">close</v-icon> 
+					Decline
+				</v-btn>
+				<v-btn flat @click="onComment" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">message</v-icon> 
+					Comment
+				</v-btn>
+				<v-btn flat @click="onTransferOwnership" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">supervisor_account</v-icon> 
+					Transfer Ownership
+				</v-btn>
+				<v-divider v-if="isCommenting" class="comment-divider"></v-divider>
+				<div v-if="isCommenting" class="m-x-24 p-y-12">
+					<p class="fs-14 color-gray-light"><font class="fw-medium">Optional:</font> Add a comment to your action before submitting.</p>
+					<v-text-field
+						label="Write a comment..." 
+						rows="3"
+						class="fs-16 comment-text"
+						v-model="comment"
+						multi-line/>
+					<div class="text-right">
+						<v-btn color="primary" @click="submitWithComment">Submit</v-btn>
+					</div>
+				</div>
+			</v-card-actions>
+		</v-card>				
+	</v-menu>			
+</v-layout>
+  

@@ -1,0 +1,73 @@
+<v-container class="details-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex class="details-block text-xs-center">
+            
+			<v-badge overlap right bottom color="grey lighten-2" class="badge-view">
+				<v-avatar class="purple avatar-view" size="70px">
+					<img v-if="image" :src="image" class="profile-image"/>
+					<span v-else class="white--text fs-36 fw-light">{{truncate(userInfo.fname, userInfo.lname)}}</span>
+				</v-avatar>
+				<span slot="badge" v-if="isEditable" @click="editProfilePhoto"><v-icon color="white">edit</v-icon></span>
+				<input id="file-open-button" type="file" @change="onFileChange" style="display: none;">
+			</v-badge>
+			<p class="fs-36 m-t-12">{{userInfo.fname + " " + userInfo.lname}}</p>
+            
+			<v-form ref="mainForm">
+				<v-flex d-flex xs6 offset-xs3>
+					<v-flex xs6 class="px-4 py-2">
+						<v-text-field 
+							ref="fname" label="First Name"
+							v-model="userInfo.fname"
+							:disabled="!isEditable" 
+							:rules="[rules.required]"
+							v-on:keyup="keyUp($event)"/>
+					</v-flex>
+					<v-flex xs6 class="px-4 py-2">
+						<v-text-field
+							ref="lname"
+							label="Last Name"
+							v-model="userInfo.lname"
+							:disabled="!isEditable"
+							:rules="[rules.required]"
+							v-on:keyup="keyUp($event)"/>
+					</v-flex>
+				</v-flex>
+				<v-flex xs6 offset-xs3 class="px-4 py-2">
+					<v-text-field
+						:class="{ disabled: !isEditable }"
+						ref="phone"
+						label="Phone" 
+						v-model="userInfo.phone" 
+						:prefix="userInfo.phone === '' ? '' : '+ 1'" 
+						mask="(###) ### - ####" 
+						:disabled="!isEditable"
+						v-on:keyup="keyUp($event)"/>
+				</v-flex>
+				<v-flex xs6 offset-xs3 class="px-4 py-2">
+					<v-text-field 
+						ref="email"
+						label="Email"
+						v-model="userInfo.email"
+						:disabled="!isEditable"
+						:rules="[rules.required, rules.validEmail]"
+						v-on:keyup="keyUp($event)"/>
+				</v-flex>
+				<v-flex v-show="!isEditable" xs6 offset-xs3 class="text-xs-right m-b-60">
+					<v-btn flat class="btn-flat" ref="editButton" @click="onEdit">Edit</v-btn>
+				</v-flex>
+			</v-form>
+		</v-flex>        
+	</v-layout>
+
+	<div v-if="isEditable" class="footerbar-view">
+		<v-layout row wrap>
+			<v-flex sm12>
+				<v-toolbar class="footer-content">
+					<v-btn flat color="grey" v-on:click="onCancel">Cancel</v-btn>
+					<v-spacer></v-spacer>
+					<v-btn color="primary" :disabled="!isActived" @click="onSubmit">Submit</v-btn>
+				</v-toolbar>
+			</v-flex>
+		</v-layout>
+	</div>
+</v-container>

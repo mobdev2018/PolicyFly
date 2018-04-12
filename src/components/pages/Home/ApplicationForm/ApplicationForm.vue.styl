@@ -1,0 +1,56 @@
+@import '~vuetify/src/stylus/settings/_theme.styl'
+
+.questions-container
+  height: 100%
+  display: flex
+  flex-direction: column
+  .questions-inner-layout
+    max-width: 1200px
+    height: 100%
+    padding-bottom: 0
+    display: flex
+    flex-direction: column
+    flex: 1
+    .main-layout
+      height: 100%
+      .question-block
+        height: 100%
+        position: relative
+        .question-content
+          height: 100%
+          overflow: hidden
+          position: relative
+          padding-top: 95px
+          .question-space
+            height: 100px
+        > .fade-layer 
+          position: absolute
+          left: 70px
+          right: 90px
+          top: 0px
+          height: 110px
+          background: linear-gradient(rgba(249,249,249, 1), rgba(249,249,249, 0.3))
+          z-index: 10
+        .arrows    
+          position: absolute
+          z-index: 1
+          width: 40px
+          top: 150px
+          bottom: 0
+          right: 40px
+          height: 90px
+          > button
+            border-style: solid
+            border: 1px solid $arrow__border-color !important
+            color: $arrow__border-color !important
+            margin: 0
+            &:first-child
+              margin-bottom: 10px
+  .alert-view
+    height: 56px
+    padding-right: 0px
+    background-color: #4D4F53 !important
+    border: none
+    position: fixed
+    right: 12px
+    bottom: 15%

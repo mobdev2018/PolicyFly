@@ -1,0 +1,8 @@
+<v-container fluid class="pa-0">
+	<v-layout row wrap class="ml-1">
+		<v-flex class="input-view mr-2" v-for="index in [0,1,2,3,4,5]">
+			<input type="number" v-if="themeColor==='blue'" class="blue-number-text" v-focus="index == counter" :disabled="counter < index" @focus="resetValue(index)" v-model="code[index]" v-mask="'#'" @keydown="keyDown($event)">
+			<input type="number" v-if="themeColor==='white'" class="white-number-text" v-focus="index == counter" :disabled="counter < index" @focus="resetValue(index)" v-model="code[index]" v-mask="'#'" @keydown="keyDown($event)">
+		</v-flex>
+	</v-layout>
+</v-container>

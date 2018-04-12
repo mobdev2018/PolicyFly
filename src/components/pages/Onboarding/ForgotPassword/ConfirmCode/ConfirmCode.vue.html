@@ -1,0 +1,18 @@
+<v-container class="forgotpassword-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 sm6 offset-sm3 class="text-xs-center">
+			<p class="fs-36 fw-light m-t-120">
+				Two-Factor Text Messaging
+			</p>
+			<p class="fs-16">
+				A message has been sent to your mobile phone number.
+			</p>
+			<p class="fs-14 m-t-36">
+				Didn't receive it? <a class="link-text" href="">Resend code via text message.</a>
+			</p>
+			<div class="code-input m-t-12">
+				<CodeInput themeColor="white" :onFill="onFill"/>
+			</div>
+		</v-flex>
+	</v-layout>
+</v-container>

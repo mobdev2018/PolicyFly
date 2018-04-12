@@ -1,0 +1,8 @@
+<ul class="question-menu pt-2">
+  <li v-for="(item, index) in data.content" :key="index" class="mt-2" :class="{'blue--text': isActive(index)}">
+    <v-icon class="title green--text" v-if="item.valid">check</v-icon>
+    <span class="mr-2" v-else-if="!item.valid && index>=activedIndex()">{{index + 1}}.</span>
+    <v-icon class="title red--text" v-else="!item.valid">close</v-icon>
+    {{item.name}}
+  </li>
+</ul>

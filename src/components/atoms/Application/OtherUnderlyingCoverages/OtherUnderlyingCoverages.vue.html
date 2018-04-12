@@ -1,0 +1,196 @@
+<div class="inner-content pb-4">
+
+  <div class="inline-field" :style="{width: item.width + '%'}">
+    <p v-if="item.description" class="ma-0 grey--text">{{item.description}}</p>
+    <v-menu offset-y v-if="item.type == 'dropdown'">
+      <v-btn color="primary" dark slot="activator" @focus="cardActivate(item.name)" :ref="item.name" class="dropdown-button">{{item.title}}<v-icon right color="black" class="arrow-icon">arrow_drop_down</v-icon></v-btn>
+      <v-list>
+        <v-list-tile v-for="title in item.subtitles" @click="addCoverageType(title)">
+          <v-list-tile-title>{{title}}</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+  </div>
+
+  <v-form v-if="coverageType != ''" ref="otherUnderlyingForm" lazy-validation class="inner-content pb-4">
+    <div class="inline-field" :style="{width: '100%'}">
+      <v-text-field
+        v-model="coverageType"
+        disabled/>
+      <p class="ma-0 grey--text">Provide what type of additional liability coverage you have and its corresponding details.</p>
+      <v-text-field
+        v-if="coverageType == 'Other Liability'"
+        label="Name"
+        v-model="coverageName"
+        ref="coverageName"
+        @focus="cardActivate(item.name)"
+        :rules="[rules.required]"/>
+      <v-text-field
+        label="Limit Provided"
+        v-model="limitProvided"
+        ref="limitProvided"
+        @focus="cardActivate(item.name)"
+        @keyup="limitProvided = formatNumber(limitProvided)"
+        :rules="[rules.required]"/>
+    </div>
+    <div class="inline-field" :style="{width: '50%'}">
+      <v-text-field
+        label="Named Insured"
+        v-model="namedInsured"
+        ref="namedInsured"
+        @focus="cardActivate(item.name)"
+        :rules="[rules.required]"/>
+    </div>
+    <div class="inline-field" :style="{width: '50%'}">
+      <v-text-field
+        label="Carrier"
+        v-model="carrier"
+        ref="carrier"
+        @focus="cardActivate(item.name)"
+        :rules="[rules.required]"/>
+    </div>
+    <div class="inline-field" :style="{width: '30%'}">
+      <v-text-field
+        label="Annual Premium"
+        v-model="annualPremium"
+        ref="annualPremium"
+        @focus="cardActivate(item.name)"
+        @keyup="annualPremium = formatNumber(annualPremium)"
+        :rules="[rules.required]"/>
+    </div>
+    <div class="inline-field" :style="{width: '35%'}">
+      <template>
+        <v-dialog
+          persistent
+          lazy
+          :style="{width: '100%'}">
+          <v-text-field
+            slot="activator"
+            label="Effective Date"
+            v-model="startDate"
+            append-icon="keyboard_arrow_down"
+            readonly
+            @focus="cardActivate(item.name)"
+            :rules="[rules.required]"/>
+
+            <v-date-picker @input="startDate = formatDate($event)" scrollable actions autosave>
+              <template slot-scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+        </v-dialog>
+      </template>
+    </div>
+
+    <div class="inline-field" :style="{width: '35%'}">
+      <template>
+        <v-dialog
+          persistent
+          lazy
+          :style="{width: '100%'}">
+          <v-text-field
+            slot="activator"
+            label="Expiration Date"
+            v-model="endDate"
+            append-icon="keyboard_arrow_down"
+            readonly            
+            @focus="cardActivate(item.name)"
+            :rules="[rules.required]"/>
+
+            <v-date-picker @input="endDate = formatDate($event)" scrollable actions autosave>
+              <template slot-scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+        </v-dialog>
+      </template>
+    </div>
+
+    <v-btn
+      v-if="editingIndex==0"
+      color="primary"  
+      flat 
+      class="float-right"
+      @click="onAdd()">
+      Add
+    </v-btn>
+    <v-btn
+      v-if="editingIndex!=0"
+      color="grey"  
+      flat 
+      @click="onCancel()">
+      Cancel
+    </v-btn>
+    <v-btn
+      v-if="editingIndex!=0"
+      color="primary"  
+      flat 
+      class="float-right"
+      @click="onSave()">
+      Save
+    </v-btn>
+  </v-form>
+
+  <div class="m-t-24 inline-field" :style="{width: '100%'}">
+      <v-expansion-panel class="">
+          <v-expansion-panel-content v-for="(value,index) in values">
+              <div slot="header">{{index+1}}. {{value.coverageType}}</div>
+              <v-card class="grey lighten-4">
+                  <v-divider></v-divider>
+                  <div class="row-view m-t-24">
+                      <v-flex xs6 class="item-view">
+                          <v-flex xs6 class="item-text">Name</v-flex>
+                          <v-flex xs6 class="value-text">{{value.coverageName}}</v-flex>
+                      </v-flex>
+                      <v-flex class="item-view m-l-12">
+                          <v-flex xs6 class="item-text">Annual Premium</v-flex>
+                          <v-flex xs6 class="value-text">${{value.annualPremium}}</v-flex>
+                      </v-flex>
+                  </div>
+                  <div class="row-view">
+                      <v-flex xs6 class="item-view">
+                          <v-flex xs6 class="item-text">Limits Provided</v-flex>
+                          <v-flex xs6 class="value-text">${{value.limitProvided}}</v-flex>
+                      </v-flex>
+                      <v-flex class="item-view m-l-12">
+                          <v-flex xs6 class="item-text">Effective Date</v-flex>
+                          <v-flex xs6 class="value-text">{{value.startDate}}</v-flex>
+                      </v-flex>
+                  </div>
+
+                  <div class="row-view">
+                      <v-flex xs6 class="item-view">
+                          <v-flex xs6 class="item-text">Carrier</v-flex>
+                          <v-flex xs6 class="value-text">{{value.carrier}}</v-flex>
+                      </v-flex>
+                      <v-flex class="item-view m-l-12">
+                          <v-flex xs6 class="item-text">Expiration Date</v-flex>
+                          <v-flex xs6 class="value-text">{{value.endDate}}</v-flex>
+                      </v-flex>
+                  </div>
+
+                  <div class="row-view">
+                      <v-flex xs6 class="item-view">
+                          <v-flex xs6 class="item-text">Named Insured</v-flex>
+                          <v-flex xs6 class="value-text">{{value.namedInsured}}</v-flex>
+                      </v-flex>                      
+                  </div>
+                  
+                  <v-divider class="divider-view m-t-24"></v-divider>
+                  <v-card-actions>
+                      <v-btn flat small color="grey ml-0" @click="onDelete(index)">Delete</v-btn>
+                      <v-spacer></v-spacer>
+                      <v-btn flat small color="primary" @click="onEdit(index)">Edit</v-btn>
+                  </v-card-actions>
+              </v-card>
+          </v-expansion-panel-content>
+      </v-expansion-panel>
+  </div>
+  
+</div>

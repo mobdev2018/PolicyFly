@@ -1,0 +1,14 @@
+<div class="main-container">
+  <div class="navbar-view">
+    <Navbar role="Broker"/>
+    <NavbarHeader v-if="isTabsList" :title="title" :isActions="isActionsButton" :actions="showFAB" :tabList="tabList" :isAutoTitle="isAutoTitle"/>
+    <NavbarHeader v-else :title="title" :isActions="isActionsButton" :actions="showFAB"/>
+  </div>  
+  <div class="page-view">
+    <transition name="fade" mode="out-in">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>  
+</div>

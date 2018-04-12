@@ -1,0 +1,98 @@
+<v-form ref="questionForm" validate-on-blur class="inner-content pb-4">
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<v-text-field
+			label="Address"
+			v-model="address"
+			@focus="cardActivate()"
+			@keyup="onKeyUp"/> 
+	</div>
+	<div class="inline-field" :style="{width: '100%'}">
+		<v-text-field
+			label="Suite, Floor, Etc."
+			v-model="address2"
+			@focus="cardActivate()"
+			@keyup="onKeyUp"/> 
+	</div>
+	<div class="inline-field" :style="{width: '100%'}">
+		<p class="ma-0 p-t-12 grey--text">
+			You can include notes for each location to add additional information like suite or floor number, gross sales per location, square footage per location, etc.
+		</p>
+	</div>
+	<div class="inline-field" :style="{width: '100%'}">
+		<v-text-field
+			validate-on-blur
+			label="Location Notes"
+			v-model="locationNotes"
+			@focus="cardActivate()"
+			class="m-t-12 textarea-view"
+			@keyup="onKeyUp"
+			multi-line />
+	</div>
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<v-btn
+			v-if="editingIndex == 0"
+			color="primary"  
+			flat 
+			class="float-right"
+			@click="onAdd()"
+			@focus="cardActivate()"
+			:disabled="!enabledAddButton">
+			Add
+		</v-btn>
+		<v-btn
+			v-if="editingIndex != 0"
+			color="grey"  
+			flat 
+			@click="onCancel()"
+			@focus="cardActivate()">
+			Cancel
+		</v-btn>
+		<v-btn
+			v-if="editingIndex != 0"
+			color="primary"  
+			flat 
+			class="float-right"
+			@click="onSave()"
+			@focus="cardActivate()">
+			Save
+		</v-btn>
+	</div>
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<div v-if="values.length > 0">
+			<v-expansion-panel class="my-3">
+				<v-expansion-panel-content v-for="(subItem,index) in values">
+					<div slot="header">{{index+1}}.{{subItem.address}}</div>
+					<v-card class="grey lighten-4">
+						<v-divider v-if="subItem.address2 != '' || subItem.locationNotes != ''" class="mb-3"></v-divider>
+						<v-flex v-if="subItem.address2 != ''" class="ml-4 pl-1 item-view">
+							<v-flex xs4 class="item-text">Suite, Floor, Etc.</v-flex>
+							<v-flex xs8>{{subItem.address2}}</v-flex>
+						</v-flex>
+						<v-flex v-if="subItem.locationNotes != ''" class="ml-4 pl-1 item-view">
+							<v-flex xs4 class="item-text">Location Notes</v-flex>
+							<v-flex xs8>{{subItem.locationNotes}}</v-flex>
+						</v-flex>
+						<v-divider v-if="subItem.address2 != '' || subItem.locationNotes != ''" class="divider-view mt-3"></v-divider>
+						<v-card-actions>
+							<v-btn flat small color="grey ml-0" @click="onDelete(index)">Delete</v-btn>
+							<v-spacer></v-spacer>
+							<v-btn flat small color="primary" @click="onEdit(index)">Edit</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-expansion-panel-content>
+			</v-expansion-panel>
+		</div>
+	</div>
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<div class="d-flex align-items-center justify-content-center p-x-60 m-t-36">
+			<p class="fs-18 color-gray text-xs-center">
+				Drag and drop anywhere on the screen. Your attachments will appear in the attachments section below.
+			</p>
+		</div>
+	</div>
+
+</v-form>

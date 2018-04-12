@@ -1,0 +1,31 @@
+@import '~vuetify/src/stylus/settings/_theme.styl'
+@import '../../../../stylus/colors.styl'
+
+.boarding-container
+  height: 100%
+  background-color: $color-primary
+  .main-layout
+    display: initial
+    .login-dialog
+      max-width: 482px
+      height: 553px
+      margin: 0 auto
+      margin-top: -60px
+      @media (max-width: 900px)
+        margin-top: 16px
+      // box-shadow: 1px 1px 3px 1px #111111
+      border-radius: 10px
+      background-color: #1A3056
+      .welcome-view
+        justify-content: center
+        height: 160px
+        color: #fff        
+      .content-view
+        background-color: #ffffff
+        .login-button
+          float: right
+        .forgot-button
+          margin-left: -16px
+          text-transform: none !important
+        .inner-content
+          width: 100%

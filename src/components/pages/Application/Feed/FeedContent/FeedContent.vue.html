@@ -1,0 +1,198 @@
+<v-layout column class="feedcontent-container pa-2">
+	<v-flex class="main-view">
+		<!-- Write a Comment -->
+		<v-card flat>
+			<v-card-actions class="elevation-1 p-a-24">
+				<input v-model="comments" type="text" placeholder="Write a Comment..." class="fs-16 comment-input"></input>
+			</v-card-actions>
+    </v-card>
+    
+    <v-flex class="text-right">
+      <v-btn :disabled="comments == ''" color="primary" class="m-t-24" @click="onSubmit">Submit</v-btn>
+    </v-flex>
+
+		<v-card flat class="m-y-36">
+			<v-card-actions class="px-0 p-t-24 p-b-120 elevation-3 d-block">
+				<div class="date-view mx-0">
+					<div class="line-view"></div>
+					<div class="date-text flex-center align-center">
+						<p class="fs-12 ma-0">Today</p>
+					</div>
+					<div class="line-view"></div>
+				</div>
+
+				<div class="display-flex align-center m-x-36 m-t-24" v-for="item in eventItems">
+					<v-avatar v-if="item.type === 'comment'" class="pink darken-4" size="44px">
+						<img v-if="image" :src="image" class="profile-image"/>
+						<span v-else class="white--text fs-20 fw-light">{{truncate(item.fname, item.lname)}}</span>
+					</v-avatar>
+					<div v-else class="image-view flex-center align-center">
+						<img src="~src/assets/quote_icon.png" class="quote-icon">
+					</div>
+					<div class="p-l-36 detail-view">
+						<p class="fs-12 mb-0">{{item.type != 'comment' ? 'PolicyFly' : item.fname + ' ' + item.lname}}</p>
+						<p v-if="item.type=='comment'" class="fs-12 fw-light mb-0 message">{{item.action}}</p>
+						<p v-else class="fs-12 fw-light mb-0">
+							{{getDescription(item)}} 
+							<a v-if="item.type=='quote'" class="link-text">View Quote.</a>
+							<a v-if="item.type=='binder'" class="link-text">View Binder.</a>
+						</p>
+						<p class="fs-10 fw-medium time-text mt-1 mb-0">{{item.time}}</p>
+					</div>
+				</div>
+			</v-card-actions>
+		</v-card>
+
+	</v-flex>
+
+	<v-alert
+    :value="message != ''"
+    transition="slide-x-reverse-transition"
+    class="alert-view">
+    {{message}}
+    <v-btn flat color="white" @click="onCloseAlert" class="m-l-48">close</v-btn>
+	</v-alert>
+	
+	<!-- Fab Menu -->
+	<v-menu top left offset-y :nudge-top="12" :close-on-content-click="false" v-model="openedMenu" class="fab-view">
+		<v-btn fab dark slot="activator" class="settings-button">
+			<v-icon v-if="!openedMenu" dark>settings</v-icon>
+			<v-icon v-else dark>close</v-icon>
+		</v-btn>				
+		<v-card class="popup-view">
+			<v-list class="menu-header-view py-0">
+				<v-list-tile class="menu-title-view">
+					<v-list-tile-content>
+						<v-list-tile-title>Hi, John!</v-list-tile-title>
+						<v-list-tile-sub-title>What would you like to do today?</v-list-tile-sub-title>
+					</v-list-tile-content>
+				</v-list-tile>
+				<div>
+					<div class="d-flex m-x-32">
+						<p class="fs-10 fw-bold color-white py-2 my-0">APPLICATION STATUS:</p>
+						<p class="fs-10 fw-bold color-fab-content ml-2 py-2 my-0">{{ getStatus() }}</p>
+					</div>
+				</div>	
+			</v-list>
+			<v-divider></v-divider>
+			<!-- Quoted -->
+			<v-card-actions v-if="stepIndex == 3">
+				<v-btn flat @click="onEditQuote" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">playlist_add</v-icon> 
+					Edit Quote
+				</v-btn>
+				<v-btn flat @click="onQuoteLost" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">thumb_down</v-icon> 
+					Quote Lost
+				</v-btn>
+				<v-btn flat @click="onEdit" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">edit</v-icon> 
+					Edit
+				</v-btn>
+				<v-btn flat @click="onBackToDraft" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">subdirectory_arrow_left</v-icon> 
+					Back to Draft
+				</v-btn>
+				<v-btn flat @click="onComment" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">message</v-icon> 
+					Comment
+				</v-btn>
+				<v-btn flat @click="onTransferOwnership" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">supervisor_account</v-icon> 
+					Transfer Ownership
+				</v-btn>
+				<v-divider v-if="isCommenting" class="comment-divider"></v-divider>
+				<div v-if="isCommenting" class="m-x-24 p-y-12">
+					<p class="fs-14 color-gray-light"><font class="fw-medium">Optional:</font> Add a comment to your action before submitting.</p>
+					<v-text-field
+						label="Write a comment..." 
+						rows="3"
+						class="fs-16 comment-text"
+						v-model="comment"
+						multi-line/>
+					<div class="text-right">
+						<v-btn color="primary" @click="submitComment">Submit</v-btn>
+					</div>
+				</div>
+			</v-card-actions>
+
+			<!-- Pending Binder -->
+			<v-card-actions v-if="stepIndex == 4">
+				<v-btn flat @click="onIssueBinder" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">file_download</v-icon> 
+					Issue Binder
+				</v-btn>
+				<v-btn flat @click="onEditPremium" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">local_atm</v-icon> 
+					Edit Premium
+				</v-btn>
+				<v-btn flat @click="onEdit" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">edit</v-icon> 
+					Edit
+				</v-btn>
+				<v-btn flat @click="onEndRestart" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">first_page</v-icon> 
+					End & Restart
+				</v-btn>
+				<v-btn flat @click="onComment" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">message</v-icon> 
+					Comment
+				</v-btn>
+				<v-btn flat @click="onTransferOwnership" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">supervisor_account</v-icon> 
+					Transfer Ownership
+				</v-btn>
+				<v-divider v-if="isCommenting" class="comment-divider"></v-divider>
+				<div v-if="isCommenting" class="m-x-24 p-y-12">
+					<p class="fs-14 color-gray-light"><font class="fw-medium">Optional:</font> Add a comment to your action before submitting.</p>
+					<v-text-field
+						label="Write a comment..." 
+						rows="3"
+						class="fs-16 comment-text"
+						v-model="comment"
+						multi-line/>
+					<div class="text-right">
+						<v-btn color="primary" @click="submitComment">Submit</v-btn>
+					</div>
+				</div>
+			</v-card-actions>
+
+			<!-- Pending Issue -->
+			<v-card-actions v-if="stepIndex == 5">
+				<v-btn flat @click="onIssuePolicy" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">check</v-icon> 
+					Issue Policy
+				</v-btn>
+				<v-btn flat @click="onCreateEndorsement" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">subdirectory_arrow_right</v-icon> 
+					Create Endorsement
+				</v-btn>
+				<v-btn flat @click="onCancel" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">close</v-icon> 
+					Cancel
+				</v-btn>
+				<v-btn flat @click="onComment" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">message</v-icon> 
+					Comment
+				</v-btn>
+				<v-btn flat @click="onTransferOwnership" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">supervisor_account</v-icon> 
+					Transfer Ownership
+				</v-btn>
+				<v-divider v-if="isCommenting" class="comment-divider"></v-divider>
+				<div v-if="isCommenting" class="m-x-24 p-y-12">
+					<p class="fs-14 color-gray-light"><font class="fw-medium">Optional:</font> Add a comment to your action before submitting.</p>
+					<v-text-field
+						label="Write a comment..." 
+						rows="3"
+						class="fs-16 comment-text"
+						v-model="comment"
+						multi-line/>
+					<div class="text-right">
+						<v-btn color="primary" @click="submitComment">Submit</v-btn>
+					</div>
+				</div>
+			</v-card-actions>
+		</v-card>				
+	</v-menu>			
+</v-layout>

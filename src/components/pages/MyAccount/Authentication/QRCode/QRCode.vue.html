@@ -1,0 +1,22 @@
+<v-container class="qrcode-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 class="main-block text-xs-center">
+			<p class="fs-36 fw-light m-t-60">Authenticator App</p>				
+            <p class="fs-16 m-t-24 py-2 p-x-150">Scan the following QR using the authenticator app. Type in the code provided and click Next.</p>
+            
+            <div class="m-t-24">
+                <div class="qr-view">
+                    <qrcode value="123456" :size="105" />
+                </div>                
+            </div>
+            <v-flex class="code-input m-t-24">
+				<CodeInput themeColor="white" :onFill="onFill"/>
+            </v-flex>
+
+            <div class="buttons-view">
+                <v-btn round color="primary" class="btn-large m-t-36" v-on:click="onSubmit" :disabled="isValid">Submit</v-btn>
+                <v-btn flat round color="primary" class="btn-large m-t-12" v-on:click="onCancel">Back</v-btn>
+            </div>
+		</v-flex>
+	</v-layout>	
+</v-container>

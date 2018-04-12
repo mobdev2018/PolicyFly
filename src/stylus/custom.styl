@@ -1,0 +1,190 @@
+.application
+  background-color: $app__background-color !important
+  font-family: Roboto
+  font-weight: 400
+  .menu__content
+    .popup-view
+      .menu-title-view
+        .list__tile
+          height: auto !important
+      .card__actions
+        padding: 0px 0px 4px 0px
+        .menu-button
+          font-size: 12px
+          width: 100%
+          margin: 0px
+          .btn__content
+            justify-content: left
+        .menu-button:hover
+          background-color: rgba(74, 144, 226, 0.29) !important
+          .btn__content::before
+            background-color: transparent
+        .input-group__details:before
+          background-color: #e6e6e6 !important
+      .comment-divider
+        height: 5px
+        margin: 0
+        background-color: #f3f3f3 !important
+      .comment-text
+        .input-group__input textarea
+          color: #9b9b9b !important
+  .navbar
+    .toolbar
+      .toolbar__content
+        height: 42px !important
+
+  .datatable
+    thead
+      th
+        font-size: 14px
+        color: #121212
+    tbody
+      tr:hover
+        background: rgba(74, 144, 226, 0.29) !important
+      tr[active]
+        background: rgba(74, 144, 226, 0.29) !important
+    .datatable__actions
+      font-size: 12px
+      color: rgba(18,18,18,0.87) !important
+      .input-group__input .input-group__selections__comma
+        color: rgba(18,18,18,0.87) !important
+      .input-group__details
+        display: none
+  
+.dialog
+  width: auto
+
+.question-view
+  .card
+    border: 1px solid $card__border-color
+    .inner-content
+      .menu
+        width: 100%
+        margin: 10px 0
+        .menu__activator
+          > button
+            width: 100%
+            margin: 0
+
+.bg-dark-grey
+  background: #515151 !important
+.ps__rail-y
+  display: none !important
+
+.step-wrapper
+  width: 130px
+  position: relative
+  > i.icon
+    position: absolute
+    top: 42px
+    left: 0
+    right: 0
+    margin: auto
+    width: 24px
+    height: 24px
+  .stepper__step--active, .stepper__step--complete
+    + i.icon
+      display: none
+
+.search-bar
+  display: flex
+  flex-direction: row
+  .search-icon
+    color: #d8d8d8
+  .search-text
+    color: #9b9b9b
+    > label
+      color: #9b9b9b
+    .input-group__details:before
+      background-color: #e6e6e6 !important
+
+.fab-view
+  position: fixed
+  bottom: 15%
+  right: 5%
+  @media (max-width: 1100px)
+    right: 0%
+  @media (min-width: 1100px) and (max-width: 1300px)
+    right: 5%
+  @media (min-width: 1300px)
+    right: 10%
+  .settings-button
+    background-color: #4A90E2 !important
+.popup-view
+  width: 300px
+  .card__actions
+    display: initial
+  .menu-header-view
+    background-color: #5B5B5B
+    .menu-title-view
+      background-color: #515151
+      .list__tile
+        .list__tile__content
+          padding-left: 20px
+          padding-right: 20px
+          padding-top: 16px
+          .list__tile__title
+            height: auto !important
+            font-size: 18px
+            color: #ffffff
+          .list__tile__sub-title
+            height: auto !important
+            margin-top: 4px
+            margin-bottom: 16px
+            font-size: 13px
+            color: #ffffff
+.textarea-view
+  .input-group__input
+    height 80px
+.textarea-single-view
+  .input-group__input
+    height 30px
+.stepper-layout
+  width: 100%
+  background-color: transparent !important
+  box-shadow: none !important
+  .stepper__header
+    max-width: 948px
+    margin: auto
+    box-shadow: none 
+    .active-color
+      background-color: #88D68F !important
+    .inactive-color
+      background-color: #ff0000 !important
+    .stepper__step .stepper__label
+      font-size: 12px
+      color: rgba(0, 0, 0, 0.87)
+      text-shadow: none
+      width: 84px
+      display: block
+      text-align: center
+    .stepper__step--complete
+      .stepper__step__step
+        width: 60px
+        height: 60px
+        background: #E1FAE3 !important
+        border: 6px solid #88D68F !important
+        .icon
+          color: #88D68F
+          font-size: 24px
+    .stepper__step--active
+      .stepper__step__step
+        width: 60px
+        height: 60px
+        background: #88D68F !important
+        border: none 
+        .icon
+          color: #ffffff
+          font-size: 24px
+    .stepper__step--inactive
+      .stepper__step__step
+        width: 60px
+        height: 60px
+        background: transparent !important
+        border: 6px solid #E6E6E6
+        .icon
+          color: #E6E6E6
+          font-size: 24px
+    .divider
+      margin: 51px -36px 0 !important
+      height: 6px !important

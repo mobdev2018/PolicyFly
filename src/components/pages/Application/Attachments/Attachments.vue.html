@@ -1,0 +1,121 @@
+<v-layout column class="attachments-container pa-2">
+	<v-flex class="main-view">
+		<vue-transmit 
+			class="col-12"
+			dragClass="drag-view"
+			url="index.php"
+			tag="section"
+			v-bind="options"
+			v-on:complete="uploaded"
+			ref="attachmentUploader">
+
+			<div class="drop-view p-t-90 p-b-60">
+				<v-card flat class="m-y-60 card-container">
+					<v-card-actions class="pa-0 elevation-3 d-block">
+						<div class="card-view ma-0">
+							<div class="left-view elevation-1">
+								<v-toolbar class="elevation-1 transparent">
+									<p class="fs-12 mb-0 text-grey">Drag and drop anywhere or <a @click="onTriggerBrowse">browse</a> your files.</p>
+									<v-btn flat icon color="primary" :disabled="isHelper" @click="showHelper"><v-icon>info_outline</v-icon></v-btn>
+								</v-toolbar>
+								<v-flex v-if="isHelper" class="mx-3 m-t-24">
+									<p class="fs-18 color-black-light">Please add the required files:</p>
+									<ol class="p-l-24 p-r-12 color-black-light">
+										<li class="fs-12 mb-1">A currently valued general & automobile liability loss runs for the past 5 years. Include detailed claim information for any claim(s) over $250k.</li>
+										<li class="fs-12 mb-1">Copies of all underlying policies</li>
+										<li class="fs-12 mb-1">A complete list of all named insureds and their operations</li>
+										<li class="fs-12 mb-1">A complete schedule of locations.</li>
+									</ol>
+									<div class="text-center">
+										<v-btn flat icon color="grey" @click="hideHelper"><v-icon>keyboard_arrow_up</v-icon></v-btn>
+									</div>
+								</v-flex>
+								<v-list>
+									<v-list-tile avatar v-for="(file, index) in files" v-bind:key="file.id" @click="onSelect(file, index)"
+										:class="selectedIndex==index ? 'selected-row' : ''">
+										<v-list-tile-action>
+											<v-icon>insert_drive_file</v-icon>
+										</v-list-tile-action>
+										<v-list-tile-content>
+											<v-list-tile-title class="fs-14" v-text="file.name"></v-list-tile-title>
+										</v-list-tile-content>
+										<v-list-tile-avatar>
+											<v-icon>keyboard_arrow_right</v-icon>
+										</v-list-tile-avatar>
+									</v-list-tile>
+								</v-list>
+							</div>
+							<div class="right-view">
+								<vue-pdf-viewer :url="url" class="pdf-view"></vue-pdf-viewer>
+							</div>
+						</div>
+					</v-card-actions>
+				</v-card>
+			</div>
+			<template slot="files" slot-scope="props">
+			</template>
+		</vue-transmit> 
+		
+		
+
+	</v-flex>
+
+	<v-alert
+    :value="isSubmitted"
+    transition="slide-x-reverse-transition"
+    class="alert-view">
+    Your quote(s) have been submitted.
+    <v-btn flat color="white" @click="isSubmitted = false" class="m-l-48">close</v-btn>
+	</v-alert>
+	
+	<!-- Fab Menu -->
+	<v-menu top left offset-y :nudge-top="12" :close-on-content-click="true" v-model="openedMenu" class="fab-view">
+		<v-btn fab dark slot="activator" class="settings-button">
+			<v-icon v-if="!openedMenu" dark>settings</v-icon>
+			<v-icon v-else dark>close</v-icon>
+		</v-btn>
+		<v-card class="popup-view">
+			<v-list class="menu-header-view py-0">
+				<v-list-tile class="menu-title-view">
+					<v-list-tile-content>
+						<v-list-tile-title>Hi, John!</v-list-tile-title>
+						<v-list-tile-sub-title>What would you like to do today?</v-list-tile-sub-title>
+					</v-list-tile-content>
+				</v-list-tile>
+				<div>
+					<div class="d-flex m-x-32">
+						<p class="fs-10 fw-bold color-white py-2 my-0">APPLICATION STATUS:</p>
+						<p class="fs-10 fw-bold color-fab-content ml-2 py-2 my-0">QUOTED</p>
+					</div>
+				</div>	
+			</v-list>
+			<v-divider></v-divider>
+			<v-card-actions>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">playlist_add</v-icon> 
+					Edit Quote
+				</v-btn>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">thumb_down</v-icon> 
+					Quote Lost
+				</v-btn>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">edit</v-icon> 
+					Edit
+				</v-btn>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">subdirectory_arrow_left</v-icon> 
+					Back to Draft
+				</v-btn>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">message</v-icon> 
+					Comment
+				</v-btn>
+				<v-btn flat @click="" class="menu-button">
+					<v-icon small class="m-x-12 fs-20">supervisor_account</v-icon> 
+					Transfer Ownership
+				</v-btn>
+			</v-card-actions>
+		</v-card>				
+	</v-menu>
+</v-layout>

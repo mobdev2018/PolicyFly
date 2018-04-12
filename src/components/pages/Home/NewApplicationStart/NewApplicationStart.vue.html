@@ -1,0 +1,21 @@
+<v-container fluid class="boarding-container">
+	<v-layout column>
+        <v-flex sm8 offset-sm2 md6 offset-md3 lg6 offset-lg3 class="mt-5 text-xs-center">
+            <p class="fs-32 header-text">Hey there!<br>Let's get started with your application.</p>
+        </v-flex>
+        <v-flex xs12 sm8 offset-sm2 md6 offset-md3 class="mt-5 text-xs-center">
+		    <v-card class="input-dialog elevation-3">
+				<v-card-actions>
+					<v-form lazy-validation class="inner-content mt-2 px-4 py-5" v-model="isValid">
+                        <p class="title-text">Who is your primary named insured?</p>
+                        <TextBox v-model="name" :type="text" :submit="onStart" bgcolor="#FFFFFF" />
+                        <v-flex class="mt-5">
+                            <v-btn color="primary" class="mt-3 normal-button" v-on:click="onStart">Get Started</v-btn>
+                        </v-flex>					    
+                        <v-btn sm12 flat color="grey" class="mt-3 normal-button" router to="/home">Cancel</v-btn>
+					</v-form>
+				</v-card-actions>
+			</v-card>
+		</v-flex>
+	</v-layout>
+</v-container>

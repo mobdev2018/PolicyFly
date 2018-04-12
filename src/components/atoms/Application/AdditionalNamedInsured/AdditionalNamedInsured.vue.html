@@ -1,0 +1,38 @@
+<v-form ref="questionForm" validate-on-blur class="inner-content pb-4"   @submit.prevent="">
+	<div class="inline-field" :style="{width: item.width + '%'}" v-for="item in data.content">
+		<p v-if="item.description" class="ma-0 grey--text">{{item.description}}</p>
+		<v-text-field
+			v-if="item.type == 'text'"
+			:name="item.name"
+			:label="item.placeholder"
+			v-model="namedInsured"
+			:ref="item.name"
+			@focus="cardActivate(item.name)"
+			:rules="[rules.required]"/>		
+		<v-btn
+			v-if="item.type == 'button'" 
+			color="primary"  
+			flat 
+			:ref="item.name"
+			:class="'float-' + item.position"
+			@click="onAdd()"
+			@focus="cardActivate(item.name)">{{item.title}}</v-btn>
+	</div>
+	<div v-for="(name, index) in names">
+		<div v-if="(editableIndex - 1) === index" class="name-field mx-2 mb-2">
+			<p class="ma-0">{{index+1}}. </p>
+			<input type="text" :value="name" ref="newName" class="ml-1 name-input-field">
+			<div>
+				<v-btn flat icon color="green" @click="onEdit(index)"><v-icon>check</v-icon></v-btn>
+				<v-btn flat icon color="red" @click="editableIndex = 0"><v-icon>close</v-icon></v-btn>
+			</div>
+		</div>
+		<div v-else class="name-field mx-2 mb-2">
+			<p class="ma-0">{{index+1}}. {{name}}</p>
+			<div>
+				<v-btn flat icon color="grey" @click="editableIndex = index + 1"><v-icon>edit</v-icon></v-btn>
+				<v-btn flat icon color="grey" @click="onDelete(index)"><v-icon>delete</v-icon></v-btn>
+			</div>
+		</div>		
+	</div>
+</v-form>

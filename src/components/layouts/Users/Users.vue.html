@@ -1,0 +1,13 @@
+<div class="main-container">
+    <div class="navbar-view">
+        <Navbar :title="title" role="Program Admin" :isBackButton="isBackButton" :onBack="onBack"/>
+        <NavbarHeader :title="title" :isActions="isActionButton" :actions="showFAB"/>        
+    </div>
+    <div class="page-view">
+        <transition name="fade" mode="out-in">
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </transition>
+    </div>
+</div>

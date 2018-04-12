@@ -1,0 +1,11 @@
+<div class="main-container">
+	<div class="navbar-view">
+		<Navbar v-if="isNavBar" role="Broker"/>
+		<NavbarHeader v-if="isNavHeader" :title="title" :isActions="isActionsButton" :actions="showFAB"/>
+	</div>
+	<div class="page-view">
+		<keep-alive>
+			<router-view :key="$route.fullPath"></router-view>
+		</keep-alive>
+	</div>
+</div>

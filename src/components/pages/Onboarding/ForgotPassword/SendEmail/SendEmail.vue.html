@@ -1,0 +1,13 @@
+<v-container class="forgotpassword-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 sm6 offset-sm3 class="forgotpassword-block">
+			<p class="m-t-120 p-x-12 fs-16">
+				Please enter the email address that you have on file with PolicyFly and we’ll email you a link to reset your password.
+			</p>
+			<v-form ref="form" validate-on-blur class="email-view m-t-48 p-x-12">
+				<v-icon medium color="gray" sm3>email</v-icon>
+				<v-text-field sm7 validate-on-blur label="Email" v-model="email" :rules="[rules.required, rules.email]" class="ml-2 mr-5" v-on:keyup="keyUp($event)" v-on:keypress.enter.prevent="onEnter()"/>
+			</v-form>
+		</v-flex>
+	</v-layout>	
+</v-container>

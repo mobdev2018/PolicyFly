@@ -1,0 +1,38 @@
+<v-layout row class="attachments-view mt-4 pl-5">
+	<v-flex sm12>
+		<v-card flat class="p-x-12">
+			<v-card-title primary-title class="pb-0">
+				<div>
+					<h3 class="fs-18 fw-regular mb-0" :class="{'blue--text': active}">Please Add Required Files:</h3>
+					<div class="pt-3 grey--text">{{data.description}}</div>
+				</div>
+			</v-card-title>
+			<v-card-actions>
+				<v-form ref="questionForm" validate-on-blur class="inner-content pb-4">
+					<div class="inline-field" :style="{width: '100%'}">				
+							<div class="p-x-36 p-y-12">
+								<ol>
+									<li class="fs-12 mb-1">A currently valued general & automobile liability loss runs for the past 5 years. Include detailed claim information for any claim(s) over $250k.</li>
+									<li class="fs-12 mb-1">Copies of all underlying policies</li>
+									<li class="fs-12 mb-1">A complete list of all named insureds and their operations</li>
+									<li class="fs-12 mb-1">A complete schedule of locations.</li>
+								</ol>
+								<p class="fs-18 color-gray text-xs-center m-y-36">Drag and drop anywhere on the screen or <a @click="onTriggerBrowse">browse</a> your files.</p>
+							</div>
+
+							<div v-for="(file, i) in props.files" :key="file.id" :class="{'m-t-12': i === 0}">
+								<div class="media m-x-12">
+									<p class="fs-14 m-l-24 mb-0">{{ file.name }}</p>
+									<div class="progress">
+										<div class="progress-bar bg-success" :style="{width: file.upload.progress + '%'}"></div>
+									</div>
+									<v-btn flat class="btn-flat" @click="onRemoveFile(file)">Remove</v-btn>
+								</div>
+							</div>
+						</div>
+				</v-form>
+
+			</v-card-actions>
+		</v-card>
+	</v-flex>
+</v-layout>

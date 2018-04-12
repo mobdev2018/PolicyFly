@@ -1,0 +1,50 @@
+<v-container class="application-review-container">
+	<v-layout row class="main-layout">
+			<v-stepper xs12 alt-labels v-model="currentIndex" class="stepper-layout">
+					<v-stepper-header>
+							<div class="step-wrapper">
+									<v-stepper-step step="1" :complete="currentIndex > 0" :complete-icon="currentIndex == 1 ? 'insert_drive_file' : 'check'">Draft</v-stepper-step>
+									<v-icon color="grey lighten-1">insert_drive_file</v-icon>
+							</div>
+							<v-divider :class="{'active-color': currentIndex > 1}"></v-divider>
+							<div class="step-wrapper">
+									<v-stepper-step step="2" :complete="currentIndex > 1" :complete-icon="currentIndex == 2 ? 'edit' : 'check'">Reviewing</v-stepper-step>
+									<v-icon color="grey lighten-1">edit</v-icon>
+							</div>
+							<v-divider :class="{'active-color': currentIndex > 2}"></v-divider>
+
+							<div class="step-wrapper">
+									<v-stepper-step step="3" :complete="currentIndex > 2" :complete-icon="currentIndex == 3 ? 'playlist_add_check' : 'check'">Quoted</v-stepper-step>
+									<v-icon color="grey lighten-1">playlist_add_check</v-icon>
+							</div>
+							<v-divider :class="{'active-color': currentIndex > 3}"></v-divider>
+
+							<div class="step-wrapper">
+									<v-stepper-step step="4" :complete="currentIndex > 3" :complete-icon="currentIndex == 4 ? 'alarm' : 'check'">Pending Binder</v-stepper-step>
+									<v-icon color="grey lighten-1">alarm</v-icon>
+							</div>
+							<v-divider :class="{'active-color': currentIndex > 4}"></v-divider>
+
+							<div class="step-wrapper">
+									<v-stepper-step step="5" :complete="currentIndex > 4" :complete-icon="currentIndex == 5 ? 'alarm_on' : 'check'">Pending Issue</v-stepper-step>
+									<v-icon color="grey lighten-1">alarm_on</v-icon>
+							</div>
+							<v-divider :class="{'active-color': currentIndex > 5}"></v-divider>
+
+							<div class="step-wrapper">
+									<v-stepper-step step="6" :complete="currentIndex > 5" :complete-icon="currentIndex == 6 ? 'verified_user' : 'check'">Active</v-stepper-step>
+									<v-icon color="grey lighten-1">verified_user</v-icon>
+							</div>
+					</v-stepper-header>
+					
+					<div>
+						<FeedContent :stepIndex="currentIndex"/>
+						<!-- <transition name="fade" mode="out-in">
+							<keep-alive>
+								<router-view></router-view>
+							</keep-alive>
+						</transition> -->
+					</div>					
+			</v-stepper>     
+	</v-layout>
+</v-container>

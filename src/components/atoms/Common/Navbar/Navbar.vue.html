@@ -1,0 +1,15 @@
+<v-container fluid class="pa-0 navbar">
+  <v-layout row wrap>
+    <v-flex xs12>
+      <v-toolbar dark flat class="toolbar-content">
+        <v-btn icon v-if="isBackButton" @click="onBack">
+          <v-icon>arrow_back</v-icon>
+        </v-btn>
+        <v-toolbar-side-icon v-else @click.prevent="toggleSidebar"></v-toolbar-side-icon>
+        <v-spacer></v-spacer>
+        <v-btn flat class="user-role-button">{{role}}</v-btn>
+      </v-toolbar>
+      <Sidebar ref="sidebar" />
+    </v-flex>
+  </v-layout>
+</v-container>

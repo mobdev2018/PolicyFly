@@ -1,0 +1,67 @@
+<v-card class="quote">
+  <v-card-text class="pa-0 quote-body">
+    <v-container fluid class="pa-0">
+      <v-layout row wrap>
+        <v-flex xs8 offset-xs2>
+          <p class="fs-20 fw-500">{{ data.title }}</p>
+          <v-divider class="mt-12 grey darken-4"></v-divider>
+          <p class="mt-12 text-title">Total:</p>
+          <h1 class="text-xs-right fs-45 fw-700">{{ data.total }}</h1>
+          <p class="text-xs-right"><i>/ coverage period</i></p>
+          <v-divider class="mt-12 grey lighten-1"></v-divider>
+          <v-container fluid class="mt-3 pa-0 quote-table">
+            <v-layout row wrap>
+              <v-flex xs8 class="mb-1">
+                <span class="text-title">Limit</span>
+              </v-flex>
+              <v-flex xs4 class="text-xs-right">
+                <span class="text-title">Premium</span>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap v-for="quote in data.quoteList">
+              <v-flex xs8>
+                <span class="ls-m-7">{{ quote.limit }}</span>
+              </v-flex>
+              <v-flex xs4 class="text-xs-right">
+                <span class="ls-m-7">{{ quote.premium }}</span>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <v-container fluid class="pa-0">
+            <v-layout row wrap class="mt-4">
+              <v-flex xs8>
+                <span class="text-title">All Taxes</span>
+              </v-flex>
+              <v-flex xs4 class="text-xs-right">
+                <span>{{ data.allTaxes }}</span>
+              </v-flex>
+            </v-layout>
+            <v-layout row wrap>
+              <v-flex xs8>
+                <span class="text-title">All Fees</span>
+              </v-flex>
+              <v-flex xs4 class="text-xs-right">
+                <span>{{ data.allFees }}</span>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <v-divider class="grey lighten-1"></v-divider>
+          <v-container>
+            <v-layout row wrap justify-center>
+              <v-btn flat color="primary" class="btn-details">
+                View Details
+              </v-btn>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card-text>
+  <v-card-actions class="quote-footer">
+    <v-container class="pa-0">
+      <v-layout row wrap align-center justify-center>
+        <v-btn outline round color="primary" class="btn-approve">APPROVE QUOTE</v-btn>
+      </v-layout>
+    </v-container>
+  </v-card-actions>
+</v-card>

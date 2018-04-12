@@ -1,0 +1,24 @@
+<v-container fluid class="qrcode-container">
+	<v-layout row>
+		<v-flex xs12 sm8 offset-sm2 lg6 offset-lg3 class="text-xs-center">
+            <p class="fs-36 fw-light m-t-48">Two-Factor Authenticator App</p>
+            <p class="fs-16 mt-2">Scan the following QR using the authenticator app.<br>  
+                Type in the code provided and click Next.</p>
+            <div class="mt-3">
+                <div class="qr-view">
+                    <qrcode value="123456" :size="105" />
+                </div>                
+            </div>
+            <v-flex class="mt-5 pt-3 code-input">
+				<CodeInput themeColor="blue" :onFill="onFill"/>
+            </v-flex>
+            <div class="mt-5">
+                <v-btn round color="primary" large dark class="next-button" :disabled="isValid" v-on:click="onNext">Next</v-btn>
+            </div>
+            <v-flex xs12 sm6 offset-sm3 class="mt-3 link-view">
+                <a href="/register/completed">I don’t want to use an Authenticator App now.</a>
+                <a class="mt-3" href="/register/question">Experiencing an issue? Start over and click Yes again.</a>
+            </v-flex>
+		</v-flex>
+	</v-layout>
+</v-container>

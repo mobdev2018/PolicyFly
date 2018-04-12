@@ -1,0 +1,118 @@
+<v-card class="quote">
+  <div :class="(index + 1 == selectedIndex) ?  'quote-blur' : ''">
+    <v-card-text class="pa-0 quote-body">
+      <v-container fluid class="pa-0">
+        <v-layout row wrap>
+          <v-flex xs8 offset-xs2>
+            <p class="fs-20 fw-medium">{{ data.title }}</p>
+            <v-divider class="m-t-12 grey darken-4"></v-divider>
+            <p class="fs-12 text-title m-t-12">Total:</p>
+            <p class="text-xs-right fs-45 fw-bold">{{ data.total }}</p>
+            <p class="fs-12 fs-italic text-xs-right">/ coverage period</p>
+            <p v-if="data.totalAnnualPremium" class="fs-12 text-xs-right">Total Annual Premium {{ data.totalAnnualPremium }}</p>
+            <v-divider class="m-t-12 grey lighten-1"></v-divider>
+            <v-container fluid class="mt-3 pa-0 quote-table">
+              <v-layout row wrap>
+                <v-flex xs8 class="mb-1">
+                  <span class="fs-12 text-title">Limit</span>
+                </v-flex>
+                <v-flex xs4 class="text-xs-right">
+                  <span class="fs-12 text-title">Premium</span>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap v-for="quote in data.quoteList">
+                <v-flex xs8>
+                  <span class="fs-12 ls-m-7">{{ quote.limit }}</span>
+                </v-flex>
+                <v-flex xs4 class="text-xs-right">
+                  <span class="fs-12 ls-m-7">{{ quote.premium }}</span>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container fluid class="pa-0">
+              <v-layout row wrap class="mt-4">
+                <v-flex xs8>
+                  <span class="fs-12 text-title">All Taxes</span>
+                </v-flex>
+                <v-flex xs4 class="fs-12 text-xs-right">
+                  <span>{{ data.allTaxes }}</span>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs8>
+                  <span class="fs-12 text-title">All Fees</span>
+                </v-flex>
+                <v-flex xs4 class="fs-12 text-xs-right">
+                  <span>{{ data.allFees }}</span>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-divider class="grey lighten-1"></v-divider>
+            <v-container>
+              <v-layout row wrap justify-center>
+                <v-btn flat color="primary" class="fs-12 fw-regular btn-details" @click="onViewDetails">
+                  View Details
+                </v-btn>
+              </v-layout>
+            </v-container>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-text>
+    <v-card-actions class="quote-footer">
+      <v-container class="pa-0">
+        <v-layout row wrap align-center justify-center>
+          <v-btn outline round color="primary" class="btn-approve fs-16" @click="onApproveQuote(index)">APPROVE QUOTE</v-btn>
+        </v-layout>
+      </v-container>
+    </v-card-actions>
+  </div>
+  <!-- Overlay -->
+  <div v-if="selectedIndex != 0" class="overlay-view">
+    <v-btn v-if="selectedIndex == index + 1"  flat icon color="white" class="close-button" @click="close">
+      <v-icon>close</v-icon>
+    </v-btn>
+    <v-card-text v-if="selectedIndex == index + 1" class="pa-0 overlay-body">
+      <v-container fluid class="pa-0">
+        <v-layout row wrap>
+          <v-flex xs8 offset-xs2>
+            <p class="fs-20 fw-medium">{{ data.title }}</p>
+            <v-divider class="m-t-12 grey lighten-1"></v-divider>
+            <p class="fs-12 text-title m-t-12">Total:</p>
+            <p class="text-xs-right fs-45 fw-bold">{{ data.total }}</p>
+            <p class="fs-12 fs-italic text-xs-right">/ coverage period</p>
+            <p v-if="data.totalAnnualPremium" class="fs-12 text-xs-right">Total Annual Premium {{ data.totalAnnualPremium }}</p>
+            <v-divider class="m-t-12 grey lighten-1"></v-divider>
+            <v-layout v-if="!isCustomer" row wrap align-center justify-center class="m-y-60">
+              <p class="fs-24 fw-medium text-center p-x-12">Who would you like to sign?</p>
+            </v-layout>
+          </v-flex>
+          <v-flex>
+            <v-layout v-if="isCustomer" row wrap align-center justify-center class="m-t-60 m-b-12">
+              <p class="fs-24 fw-medium text-center p-x-12">Please provide your customer with this link to sign:</p>
+              <input type="text" class="fs-18 m-t-36 p-x-12 input-text" placeholder="https://hellosign.com/customer1">
+              <v-btn flat color="grey" class="fs-12 m-t-24">Copy link to clipboard</v-btn>
+            </v-layout>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-text>
+    <v-card-actions v-if="selectedIndex == index + 1" class="overlay-footer">
+      <v-container v-if="!isCustomer" class="pa-0">
+        <v-layout row wrap align-center justify-center>
+          <v-btn color="primary" class="fs-14 btn-overlay" @click="">I Will Sign</v-btn>
+        </v-layout>
+        <v-layout row wrap align-center justify-center class="m-t-24">
+          <v-btn color="primary" class="fs-14 btn-overlay" @click="sendToCustomer">Send to customer</v-btn>
+        </v-layout>
+      </v-container>
+
+      <!-- Send to Customer -->
+      <v-container v-if="isCustomer" class="pa-0">
+        <v-layout row wrap align-center justify-center>
+          <v-btn color="primary" class="fs-14 btn-overlay" @click="onDone">Done</v-btn>
+        </v-layout>
+      </v-container>
+    </v-card-actions>
+  </div>
+</v-card>

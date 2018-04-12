@@ -1,0 +1,28 @@
+<v-container class="sms-container pa-0">
+	<v-layout row class="main-layout elevation-2">
+		<v-flex xs12 class="main-block text-xs-center">
+			<p class="fs-36 fw-light m-t-60">Two-Factor Text Messaging</p>				
+            <p class="fs-16 m-t-24 py-2 p-x-150">Enter the code sent to your mobile phone number.</p>
+                   
+            <p class="fs-14 m-t-36">Didn't receive it? <a style="text-decoration: underline" v-on:click="resendCode">Resend code via text message.</a></p>
+            
+            <v-flex class="code-input mt-1">
+				<CodeInput themeColor="white" :onFill="onFill"/>
+            </v-flex>
+
+            <div class="buttons-view m-t-24">
+                <v-btn round color="primary" class="btn-large m-t-36" v-on:click="onSubmit" :disabled="isValid">Submit</v-btn>
+                <v-btn flat round color="primary" class="btn-large m-t-12" v-on:click="onCancel">Back</v-btn>
+            </div>
+
+            <v-alert
+                color="grey darken-3"
+                :value="alert"
+                transition="slide-x-reverse-transition"
+                class="alert-view">
+                Your message has been resent.
+                <v-btn flat color="white" @click="alert = false" class="m-l-60">close</v-btn>
+            </v-alert>            
+		</v-flex>
+	</v-layout>	
+</v-container>

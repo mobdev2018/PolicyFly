@@ -1,0 +1,118 @@
+<v-form ref="questionForm" lazy-validation class="inner-content pb-4" @submit.prevent="">
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<v-text-field
+			label="Gross Receipts"
+			v-model="grossReceipts"
+			@focus="cardActivate()"
+			@keyup="grossReceipts = formatNumber(grossReceipts)" 
+			:rules="data.valid === false ? [rules.required] : []"/>
+	</div>
+	<div class="inline-field" :style="{width: '100%'}">
+		<p class="ma-0 grey--text">Lessors Risk Exposures?</p>
+		<v-radio-group 
+			v-model="lessorsRiskExposures" 
+			class="pt-1"
+			@change="cardActivate()">
+			<v-radio
+				label="No"
+				value="false">
+			</v-radio>
+			<v-radio
+				label="Yes"
+				value="true">
+			</v-radio>
+		</v-radio-group>
+	</div>
+	<div v-if="lessorsRiskExposures === 'true'" class="inline-field" :style="{width: '66.66%'}">
+		<v-text-field
+			label="Occupant"
+			v-model="occupant"
+			@focus="cardActivate()"/>
+	</div>
+	<div v-if="lessorsRiskExposures === 'true'" class="inline-field" :style="{width: '33.33%'}">
+		<v-text-field
+			label="Sq. Ft."
+			v-model="sqft"
+			@focus="cardActivate()"
+			@keyup="sqft = formatNumber(sqft)" />
+	</div>
+	<div v-if="lessorsRiskExposures === 'true'" class="inline-field" :style="{width: '100%'}">
+		<v-btn
+			v-if="editingIndex == 0"
+			color="primary"  
+			flat 
+			class="float-right"
+			@click="onAdd()"
+			@focus="cardActivate()">
+			Add
+		</v-btn>
+		<v-btn
+			v-if="editingIndex != 0"
+			color="grey"  
+			flat 
+			@click="onCancel()"
+			@focus="cardActivate()">
+			Cancel
+		</v-btn>
+		<v-btn
+			v-if="editingIndex != 0"
+			color="primary"  
+			flat 
+			class="float-right"
+			@click="onSave()"
+			@focus="cardActivate()">
+			Save
+		</v-btn>
+	</div>
+	
+	<div class="inline-field" :style="{width: '100%'}">
+	<v-expansion-panel class="my-3">
+		<v-expansion-panel-content v-for="(subItem,index) in exposures">
+			<div slot="header">{{index+1}}.{{subItem.occupant}}</div>
+				<v-card class="grey lighten-4">
+					<v-divider></v-divider>
+					<v-flex class="ml-4 m-t-12 item-view">
+						<v-flex xs5 class="item-text">Gross Receipts</v-flex>
+						<v-flex>${{ subItem.grossReceipts }}</v-flex>
+					</v-flex>
+					<v-flex class="ml-4 item-view">
+						<v-flex xs5 class="item-text">Lessors Risk Exposures</v-flex>
+						<v-flex>{{subItem.lessorsRiskExposures === 'true'? 'Yes' : 'No'}}</v-flex>
+					</v-flex>
+					<v-flex class="ml-4 item-view">
+						<v-flex xs5 class="item-text">Sq. Ft.</v-flex>
+						<v-flex>{{ subItem.sqft }}</v-flex>
+					</v-flex>
+					<v-flex class="ml-4 item-view m-b-12">
+						<v-flex xs5 class="item-text">Occupant</v-flex>
+						<v-flex>{{subItem.occupant}}</v-flex>
+					</v-flex>
+					<v-divider class="divider-view m-t-12"></v-divider>
+					<v-card-actions>
+						<v-btn flat small color="grey ml-0" @click="onDelete(index)">Delete</v-btn>
+						<v-spacer></v-spacer>
+						<v-btn flat small color="primary" @click="onEdit(index)">Edit</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-expansion-panel-content>
+		</v-expansion-panel>
+	</div>
+
+	<div class="inline-field" :style="{width: '100%'}">
+		<p class="ma-0 grey--text">Auto Exposure?</p>
+		<v-radio-group 
+			v-model="autoExposure" 
+			class="pt-1"
+			@focus="cardActivate()">
+			<v-radio
+				label="No"
+				value="false">
+			</v-radio>
+			<v-radio
+				label="Yes"
+				value="true">
+			</v-radio>
+		</v-radio-group>
+	</div>
+</v-form>
